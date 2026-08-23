@@ -19,14 +19,15 @@
 
     <div id="footer-placeholder"></div>
 
+    <!-- 載入互動邏輯 -->
+    <script src="js/interactions.js"></script>
+
     <script>
-        // 載入組件
         const loadComponent = (id, path) => {
             fetch(path)
                 .then(r => r.text())
                 .then(d => {
                     document.getElementById(id).innerHTML = d;
-                    // 初始化選單互動
                     if(id === 'header-placeholder') initMenu();
                 });
         };

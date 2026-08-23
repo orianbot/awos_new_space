@@ -1,27 +1,52 @@
-<header id="main-header" style="position: fixed; top: 0; width: 100%; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: background 0.5s ease;">
+<header id="main-header" style="position: fixed; top: 0; width: 100%; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: var(--transition-base);">
     <div style="font-family: var(--font-heading); font-size: 1.8rem; letter-spacing: 0.3rem;">AWOS</div>
-    <div id="menu-trigger" style="cursor: pointer; font-size: 1rem; letter-spacing: 0.2rem; text-transform: uppercase;">MENU</div>
+    <div id="menu-trigger" style="cursor: pointer; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.2rem; text-transform: uppercase;">MENU</div>
 </header>
 
-<div id="full-menu" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #edece9; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.5s ease;">
-    <div id="close-menu" style="position: absolute; top: 2rem; right: 5%; cursor: pointer;">CLOSE</div>
+<div id="full-menu" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: var(--transition-base);">
+    <div id="close-menu" style="position: absolute; top: 2rem; right: 5%; color: #fff; cursor: pointer; font-family: var(--font-heading);">CLOSE</div>
     <nav style="text-align: center;">
-        <ul style="list-style: none; padding: 0; font-family: var(--font-heading); font-size: 2rem; line-height: 3;">
-            <li><a href="/about">關於</a></li>
-            <li>
-                導覽
-                <div style="font-size: 1rem; font-family: var(--font-body); color: #666; margin-top: -1rem;">
-                    <a href="/tour">農場導覽</a> / <a href="/learn">專業養殖入門</a>
+        <ul style="list-style: none; padding: 0; font-family: var(--font-heading); font-size: 2.5rem; color: #fff; line-height: 2.5;">
+            <li><a href="/" style="color: #fff; text-decoration: none;">首頁</a></li>
+            <li><a href="/about" style="color: #fff; text-decoration: none;">關於</a></li>
+            <li style="margin: 2rem 0;">
+                <div style="font-size: 2.5rem;">導覽</div>
+                <div style="font-size: 1rem; font-family: var(--font-body); opacity: 0.7;">
+                    <a href="/tour" style="color: #fff; text-decoration: none;">農場導覽</a> / <a href="/learn" style="color: #fff; text-decoration: none;">專業養殖入門</a>
                 </div>
             </li>
-            <li><a href="/blog">部落格</a></li>
-            <li>
-                商店
-                <div style="font-size: 1rem; font-family: var(--font-body); color: #666; margin-top: -1rem;">
-                    <a href="/bao">美味蝸堡</a> / <a href="/recipe">食譜</a>
+            <li><a href="/blog" style="color: #fff; text-decoration: none;">部落格</a></li>
+            <li style="margin: 2rem 0;">
+                <div style="font-size: 2.5rem;">商店</div>
+                <div style="font-size: 1rem; font-family: var(--font-body); opacity: 0.7;">
+                    <a href="/bao" style="color: #fff; text-decoration: none;">美味蝸堡</a> / <a href="/recipe" style="color: #fff; text-decoration: none;">食譜</a>
                 </div>
             </li>
-            <li><a href="/contact">聯繫與常見問題</a></li>
+            <li><a href="/contact" style="color: #fff; text-decoration: none;">聯繫 / 常見問題</a></li>
         </ul>
     </nav>
 </div>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        if (window.scrollY > 50) {
+            header.style.background = 'var(--bg-main)';
+        } else {
+            header.style.background = 'transparent';
+        }
+    });
+
+    const trigger = document.getElementById('menu-trigger');
+    const menu = document.getElementById('full-menu');
+    const close = document.getElementById('close-menu');
+    
+    trigger.addEventListener('click', () => {
+        menu.style.display = 'flex';
+        setTimeout(() => menu.style.opacity = '1', 10);
+    });
+    close.addEventListener('click', () => {
+        menu.style.opacity = '0';
+        setTimeout(() => menu.style.display = 'none', 500);
+    });
+</script>

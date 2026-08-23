@@ -1,16 +1,17 @@
 :root {
-    --color-primary: #4A5A3F;
-    --color-secondary: #C9A876;
-    --color-accent: #C97C4D;
-    --bg-main: #F7F4EE;
-    --text-main: #2E2A24;
+    --color-primary: #4A5A3F;     /* 田野綠 */
+    --color-secondary: #C9A876;   /* 暖沙棕 */
+    --color-accent: #C97C4D;     /* 陶土橘 */
+    --bg-main: #F7F4EE;         /* 米白 */
+    --text-main: #2E2A24;        /* 深灰棕 */
     
-    /* 字體 */
+    /* 字體設定 */
     --font-heading: 'Noto Serif TC', serif;
     --font-body: 'Noto Sans TC', sans-serif;
     
-    /* 間距與動畫 */
-    --transition-base: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* 轉場動畫設定 */
+    --transition-slow: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition-base: all 0.5s ease-out;
 }
 
 body {
@@ -20,24 +21,57 @@ body {
     line-height: 1.8;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
-/* 確保所有標題不使用粗黑體 */
+/* 標題不使用粗黑體 */
 h1, h2, h3 {
     font-family: var(--font-heading);
     color: var(--color-primary);
     font-weight: 300;
 }
 
-/* 低調連結樣式 */
-a {
-    text-decoration: none;
-    color: var(--text-main);
-    border-bottom: 1px solid transparent;
-    transition: var(--transition-base);
+/* 捲動淡入效果 */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: var(--transition-slow);
+}
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-a:hover {
-    border-bottom: 1px solid var(--color-accent);
+/* 圖片 hover 效果 */
+.img-hover {
+    transition: var(--transition-slow);
+}
+.img-hover:hover {
+    transform: scale(1.03);
+}
+
+/* 連結 hover 底線動畫 */
+a.underline-link {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--text-main);
+    padding-bottom: 0.2rem;
+    transition: var(--transition-base);
+}
+a.underline-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: var(--transition-base);
+}
+a.underline-link:hover::after {
+    width: 100%;
+}
+a.underline-link:hover {
     color: var(--color-accent);
 }
