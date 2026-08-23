@@ -1,0 +1,36 @@
+:root {
+    /* 色彩系統 */
+    --color-primary: #4A5A3F;     /* 田野綠 */
+    --color-secondary: #C9A876;   /* 暖沙棕 */
+    --color-accent: #C97C4D;     /* 陶土橘 */
+    --bg-main: #F7F4EE;         /* 米白 */
+    --text-main: #2E2A24;        /* 深灰棕 */
+    
+    /* 字體設定 */
+    --font-heading: 'Noto Serif TC', serif;
+    --font-body: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-main);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-accent);
+}
