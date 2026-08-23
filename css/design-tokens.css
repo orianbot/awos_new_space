@@ -1,14 +1,16 @@
 :root {
-    /* 色彩系統 */
-    --color-primary: #4A5A3F;     /* 田野綠 */
-    --color-secondary: #C9A876;   /* 暖沙棕 */
-    --color-accent: #C97C4D;     /* 陶土橘 */
-    --bg-main: #F7F4EE;         /* 米白 */
-    --text-main: #2E2A24;        /* 深灰棕 */
+    --color-primary: #4A5A3F;
+    --color-secondary: #C9A876;
+    --color-accent: #C97C4D;
+    --bg-main: #F7F4EE;
+    --text-main: #2E2A24;
     
-    /* 字體設定 */
+    /* 字體 */
     --font-heading: 'Noto Serif TC', serif;
     --font-body: 'Noto Sans TC', sans-serif;
+    
+    /* 間距與動畫 */
+    --transition-base: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 body {
@@ -20,17 +22,22 @@ body {
     padding: 0;
 }
 
+/* 確保所有標題不使用粗黑體 */
 h1, h2, h3 {
     font-family: var(--font-heading);
     color: var(--color-primary);
+    font-weight: 300;
 }
 
+/* 低調連結樣式 */
 a {
     text-decoration: none;
     color: var(--text-main);
-    transition: color 0.3s ease;
+    border-bottom: 1px solid transparent;
+    transition: var(--transition-base);
 }
 
 a:hover {
+    border-bottom: 1px solid var(--color-accent);
     color: var(--color-accent);
 }

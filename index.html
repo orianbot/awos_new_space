@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>AWOS 農場</title>
+    <title>AWOS 農場 | 米其林式的質樸農村體驗</title>
     <link rel="stylesheet" href="css/design-tokens.css">
 </head>
 <body>
@@ -20,15 +20,40 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        // 模擬元件載入 (實際開發可用 AJAX 或框架元件化)
-        fetch('components/header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
-        fetch('sections/hero.html').then(r => r.text()).then(d => document.getElementById('hero-placeholder').innerHTML = d);
-        fetch('sections/story.html').then(r => r.text()).then(d => document.getElementById('story-placeholder').innerHTML = d);
-        fetch('sections/products.html').then(r => r.text()).then(d => document.getElementById('products-placeholder').innerHTML = d);
-        fetch('sections/tour.html').then(r => r.text()).then(d => document.getElementById('tour-placeholder').innerHTML = d);
-        fetch('sections/team.html').then(r => r.text()).then(d => document.getElementById('team-placeholder').innerHTML = d);
-        fetch('sections/cta.html').then(r => r.text()).then(d => document.getElementById('cta-placeholder').innerHTML = d);
-        fetch('components/footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+        // 載入組件
+        const loadComponent = (id, path) => {
+            fetch(path)
+                .then(r => r.text())
+                .then(d => {
+                    document.getElementById(id).innerHTML = d;
+                    // 初始化選單互動
+                    if(id === 'header-placeholder') initMenu();
+                });
+        };
+
+        const initMenu = () => {
+            const trigger = document.getElementById('menu-trigger');
+            const menu = document.getElementById('full-menu');
+            const close = document.getElementById('close-menu');
+            
+            trigger.addEventListener('click', () => {
+                menu.style.display = 'flex';
+                setTimeout(() => menu.style.opacity = '1', 10);
+            });
+            close.addEventListener('click', () => {
+                menu.style.opacity = '0';
+                setTimeout(() => menu.style.display = 'none', 500);
+            });
+        };
+
+        loadComponent('header-placeholder', 'components/header.html');
+        loadComponent('hero-placeholder', 'sections/hero.html');
+        loadComponent('story-placeholder', 'sections/story.html');
+        loadComponent('products-placeholder', 'sections/products.html');
+        loadComponent('tour-placeholder', 'sections/tour.html');
+        loadComponent('team-placeholder', 'sections/team.html');
+        loadComponent('cta-placeholder', 'sections/cta.html');
+        loadComponent('footer-placeholder', 'components/footer.html');
     </script>
 </body>
 </html>

@@ -1,21 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/design-tokens.css">
-</head>
-<body>
-    <header style="padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center;">
-        <div class="logo" style="font-family: var(--font-heading); font-size: 1.5rem; letter-spacing: 0.2rem;">AWOS</div>
-        <nav>
-            <ul style="list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0;">
-                <li><a href="/about">關於</a></li>
-                <li><a href="/tour">導覽</a></li>
-                <li><a href="/blog">部落格</a></li>
-                <li><a href="/shop">商店</a></li>
-                <li><a href="/contact">聯繫與常見問題</a></li>
-            </ul>
-        </nav>
-    </header>
-</body>
-</html>
+<header id="main-header" style="position: fixed; top: 0; width: 100%; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: background 0.5s ease;">
+    <div style="font-family: var(--font-heading); font-size: 1.8rem; letter-spacing: 0.3rem;">AWOS</div>
+    <div id="menu-trigger" style="cursor: pointer; font-size: 1rem; letter-spacing: 0.2rem; text-transform: uppercase;">MENU</div>
+</header>
+
+<div id="full-menu" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #edece9; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.5s ease;">
+    <div id="close-menu" style="position: absolute; top: 2rem; right: 5%; cursor: pointer;">CLOSE</div>
+    <nav style="text-align: center;">
+        <ul style="list-style: none; padding: 0; font-family: var(--font-heading); font-size: 2rem; line-height: 3;">
+            <li><a href="/about">關於</a></li>
+            <li>
+                導覽
+                <div style="font-size: 1rem; font-family: var(--font-body); color: #666; margin-top: -1rem;">
+                    <a href="/tour">農場導覽</a> / <a href="/learn">專業養殖入門</a>
+                </div>
+            </li>
+            <li><a href="/blog">部落格</a></li>
+            <li>
+                商店
+                <div style="font-size: 1rem; font-family: var(--font-body); color: #666; margin-top: -1rem;">
+                    <a href="/bao">美味蝸堡</a> / <a href="/recipe">食譜</a>
+                </div>
+            </li>
+            <li><a href="/contact">聯繫與常見問題</a></li>
+        </ul>
+    </nav>
+</div>
