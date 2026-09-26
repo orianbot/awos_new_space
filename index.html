@@ -1,60 +1,916 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant-TW">
 <head>
-    <meta charset="UTF-8">
-    <title>AWOS 農場 | 米其林式的質樸農村體驗</title>
-    <link rel="stylesheet" href="css/design-tokens.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWOS 農場線上商店｜白玉蝸牛・有機米・農場導覽</title>
+  <meta name="description" content="A-Wos 農場快速下單商店。台東長濱直送白玉螺肉、有機一等米、蝸牛美妝、即食調理包，以及農場導覽體驗預約。">
+  <link rel="stylesheet" href="css/shop-tokens.css">
+  <style>
+    /* ==========================================================
+       S02｜Header + 分類跳轉列
+       ========================================================== */
+    .shop-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--content-padding);
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 100;
+    }
+
+    .shop-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--color-primary);
+    }
+
+    .shop-header__logo-img {
+      height: 36px;
+      width: auto;
+    }
+
+    .shop-header__logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--color-primary);
+    }
+
+    .shop-header__link {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .shop-header__link:hover {
+      color: var(--color-primary);
+    }
+
+    /* ── 分類跳轉列 ── */
+    .category-nav {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 99;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .category-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-nav__list {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      list-style: none;
+      padding: 0 var(--content-padding);
+      gap: 0;
+      min-width: max-content;
+      margin: 0 auto;
+      max-width: var(--content-max);
+    }
+
+    .category-nav__item {
+      flex-shrink: 0;
+    }
+
+    .category-nav__link {
+      display: flex;
+      align-items: center;
+      height: var(--nav-height);
+      padding: 0 clamp(12px, 2vw, 24px);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-light);
+      text-decoration: none;
+      border-bottom: 2.5px solid transparent;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+
+    .category-nav__link:hover {
+      color: var(--color-primary);
+    }
+
+    .category-nav__link.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* ==========================================================
+       主內容容器
+       ========================================================== */
+    .shop-main {
+      padding-top: calc(var(--header-height) + var(--nav-height));
+    }
+
+    /* ==========================================================
+       S03~S07｜商品區塊通用
+       ========================================================== */
+    .product-section {
+      padding: clamp(48px, 6vw, 80px) var(--content-padding);
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .product-section--alt {
+      background: var(--bg-section-alt);
+    }
+
+    .product-section--alt .product-section__inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: clamp(24px, 4vw, 40px);
+    }
+
+    .section-header__title {
+      margin-bottom: 8px;
+    }
+
+    .section-header__desc {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      max-width: 600px;
+    }
+
+    .section-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--color-secondary);
+      margin-top: 12px;
+    }
+
+    /* ==========================================================
+       S03｜商品卡片元件
+       ========================================================== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: clamp(16px, 3vw, 24px);
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 6px 24px rgba(46, 42, 36, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .product-card__image {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--bg-section-alt);
+    }
+
+    .product-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-img);
+    }
+
+    .product-card:hover .product-card__image img {
+      transform: scale(1.04);
+    }
+
+    /* 圖片佔位色塊 */
+    .product-card__placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      background: linear-gradient(135deg, #E8E4DC 0%, #D9D4CA 100%);
+      letter-spacing: 0.05em;
+    }
+
+    .product-card__badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 12px;
+      background: var(--color-primary);
+      color: var(--text-on-dark);
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+    }
+
+    .product-card__body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 8px;
+    }
+
+    .product-card__name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .product-card__spec {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .product-card__price {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .product-card__action {
+      padding: 0 20px 20px;
+    }
+
+    .product-card__action .btn-primary,
+    .product-card__action .btn-secondary {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ==========================================================
+       S08｜農場導覽體驗區（獨立版型）
+       ========================================================== */
+    .tour-section {
+      background: var(--bg-tour);
+      color: var(--text-on-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tour-section__inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: clamp(60px, 8vw, 100px) var(--content-padding);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .tour-section__image {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      background: linear-gradient(135deg, #3D4D34 0%, #5A6B4F 50%, #4A5A3F 100%);
+    }
+
+    .tour-section__image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(247, 244, 238, 0.5);
+      letter-spacing: 0.05em;
+    }
+
+    .tour-section__content h2 {
+      color: var(--text-on-dark);
+      margin-bottom: 16px;
+    }
+
+    .tour-section__subtitle {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--color-secondary);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .tour-section__desc {
+      color: rgba(247, 244, 238, 0.85);
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    .tour-section__details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .tour-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .tour-detail__icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-secondary);
+    }
+
+    .tour-detail__text {
+      font-size: 0.95rem;
+      color: rgba(247, 244, 238, 0.85);
+    }
+
+    .tour-detail__text strong {
+      color: var(--text-on-dark);
+      font-weight: 500;
+    }
+
+    .tour-section__prices {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .tour-price {
+      text-align: center;
+    }
+
+    .tour-price__label {
+      font-size: 0.8rem;
+      color: rgba(247, 244, 238, 0.6);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .tour-price__amount {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--color-secondary);
+    }
+
+    /* ==========================================================
+       S09｜Footer
+       ========================================================== */
+    .shop-footer {
+      background: var(--text-main);
+      color: rgba(247, 244, 238, 0.7);
+      padding: clamp(40px, 6vw, 64px) var(--content-padding);
+    }
+
+    .shop-footer__inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .shop-footer__brand {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--text-on-dark);
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .shop-footer__contact {
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .shop-footer__contact a {
+      color: rgba(247, 244, 238, 0.7);
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+
+    .shop-footer__contact a:hover {
+      color: var(--color-secondary);
+    }
+
+    .shop-footer__social {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .shop-footer__social a {
+      color: rgba(247, 244, 238, 0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transition: var(--transition-fast);
+    }
+
+    .shop-footer__social a:hover {
+      color: var(--color-secondary);
+    }
+
+    .shop-footer__story {
+      text-align: right;
+    }
+
+    .shop-footer__story-link {
+      display: inline-block;
+      color: var(--color-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(201, 168, 118, 0.4);
+      transition: var(--transition-fast);
+    }
+
+    .shop-footer__story-link:hover {
+      border-bottom-color: var(--color-secondary);
+    }
+
+    .shop-footer__copy {
+      font-size: 0.75rem;
+      color: rgba(247, 244, 238, 0.35);
+      margin-top: 12px;
+    }
+
+    /* ==========================================================
+       RWD
+       ========================================================== */
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-section__inner {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-section__image {
+        order: -1;
+      }
+
+      .shop-footer__inner {
+        flex-direction: column;
+      }
+
+      .shop-footer__story {
+        text-align: left;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="header-placeholder"></div>
-    
-    <main id="main">
-        <div id="hero-placeholder"></div>
-        <div id="story-placeholder"></div>
-        <div id="products-placeholder"></div>
-        <div id="tour-placeholder"></div>
-        <div id="team-placeholder"></div>
-        <div id="cta-placeholder"></div>
-    </main>
 
-    <div id="footer-placeholder"></div>
+  <!-- ============================================================
+       S02｜Header
+       ============================================================ -->
+  <header class="shop-header">
+    <a href="#" class="shop-header__logo" aria-label="AWOS 農場">
+      <img src="assets/logo.png" alt="AWOS Snail Farm" class="shop-header__logo-img">
+    </a>
+    <a href="https://awosfarm.com" class="shop-header__link" target="_blank" rel="noopener">
+      更多 ｜ 前往 awosfarm.com →
+    </a>
+  </header>
 
-    <!-- 載入互動邏輯 -->
-    <script src="js/interactions.js"></script>
+  <!-- ============================================================
+       S02｜分類跳轉列
+       ============================================================ -->
+  <nav class="category-nav" aria-label="商品分類">
+    <ul class="category-nav__list">
+      <li class="category-nav__item">
+        <a href="#escargot" class="category-nav__link active" data-section="escargot">白玉螺肉</a>
+      </li>
+      <li class="category-nav__item">
+        <a href="#rice" class="category-nav__link" data-section="rice">有機米</a>
+      </li>
+      <li class="category-nav__item">
+        <a href="#cosmetics" class="category-nav__link" data-section="cosmetics">美妝面膜</a>
+      </li>
+      <li class="category-nav__item">
+        <a href="#instant" class="category-nav__link" data-section="instant">即食調理</a>
+      </li>
+      <li class="category-nav__item">
+        <a href="#tour" class="category-nav__link" data-section="tour">農場導覽</a>
+      </li>
+    </ul>
+  </nav>
 
-    <script>
-        const loadComponent = (id, path) => {
-            fetch(path)
-                .then(r => r.text())
-                .then(d => {
-                    document.getElementById(id).innerHTML = d;
-                    if(id === 'header-placeholder') initMenu();
-                });
-        };
+  <!-- ============================================================
+       主內容
+       ============================================================ -->
+  <main class="shop-main">
 
-        const initMenu = () => {
-            const trigger = document.getElementById('menu-trigger');
-            const menu = document.getElementById('full-menu');
-            const close = document.getElementById('close-menu');
-            
-            trigger.addEventListener('click', () => {
-                menu.style.display = 'flex';
-                setTimeout(() => menu.style.opacity = '1', 10);
-            });
-            close.addEventListener('click', () => {
-                menu.style.opacity = '0';
-                setTimeout(() => menu.style.display = 'none', 500);
-            });
-        };
+    <!-- ── S04｜白玉螺肉商品區 ── -->
+    <section id="escargot" class="product-section">
+      <div class="section-header">
+        <h2 class="section-header__title">白玉螺肉</h2>
+        <p class="section-header__desc">
+          依大小分三級，全真空包裝，-18°C 冷凍配送。養殖於台東長濱全戶外環境，肉質鮮甜彈嫩。
+        </p>
+        <div class="section-divider"></div>
+      </div>
 
-        loadComponent('header-placeholder', 'components/header.html');
-        loadComponent('hero-placeholder', 'sections/hero.html');
-        loadComponent('story-placeholder', 'sections/story.html');
-        loadComponent('products-placeholder', 'sections/products.html');
-        loadComponent('tour-placeholder', 'sections/tour.html');
-        loadComponent('team-placeholder', 'sections/team.html');
-        loadComponent('cta-placeholder', 'sections/cta.html');
-        loadComponent('footer-placeholder', 'components/footer.html');
-    </script>
+      <div class="product-grid">
+        <!-- 八桑安(蝸)牛 特級 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder" style="position:relative"><img src="assets/escargot-sample.png" alt="八桑安(蝸)牛 特級白玉螺肉" style="width:100%;height:100%;object-fit:cover"></div>
+            <span class="product-card__badge">特級</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">八桑安(蝸)牛</h3>
+            <p class="product-card__spec">特級・約 55 顆/斤<br>僅供餐廳等級採購</p>
+            <div class="product-card__price">
+              <span class="text-inquire">洽詢報價</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+          </div>
+        </div>
+
+        <!-- 頂級 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder"><img src="assets/escargot-detail.jpg" alt="頂級白玉螺肉" style="width:100%;height:100%;object-fit:cover"></div>
+            <span class="product-card__badge">頂級</span>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">頂級白玉螺肉</h3>
+            <p class="product-card__spec">約 70 顆/斤・真空冷凍包裝<br>依規格選擇</p>
+            <div class="product-card__price">
+              <span class="text-price-range">NT$600 — 1,650</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-primary">立即訂購</a>
+          </div>
+        </div>
+
+        <!-- A級 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder"><img src="assets/escargot-detail.jpg" alt="A級白玉螺肉" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">A級白玉螺肉</h3>
+            <p class="product-card__spec">約 90 顆/斤・真空冷凍包裝<br>依規格選擇</p>
+            <div class="product-card__price">
+              <span class="text-price-range">NT$800 — 1,850</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-primary">立即訂購</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S05｜有機米商品區 ── -->
+    <section id="rice" class="product-section--alt">
+      <div class="product-section__inner" style="padding: clamp(48px, 6vw, 80px) var(--content-padding); max-width: var(--content-max); margin: 0 auto;">
+        <div class="section-header">
+          <h2 class="section-header__title">長濱有機一等米</h2>
+          <p class="section-header__desc">
+            高雄 139 品種，有機環境種植，55% 嚴格篩選率。來自台東長濱的珍貴稻米。
+          </p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="product-grid">
+          <!-- 大包裝 -->
+          <div class="product-card">
+            <div class="product-card__image">
+              <div class="product-card__placeholder"><img src="assets/rice-2kg.png" alt="有機一等米 大包裝" style="width:100%;height:100%;object-fit:cover"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">長濱有機一等米</h3>
+              <p class="product-card__spec">大包裝・高雄 139 品種<br>有機種植・篩選率 55%</p>
+              <div class="product-card__price">
+                <span class="text-inquire">價格洽詢</span>
+              </div>
+            </div>
+            <div class="product-card__action">
+              <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+            </div>
+          </div>
+
+          <!-- 小包裝 -->
+          <div class="product-card">
+            <div class="product-card__image">
+              <div class="product-card__placeholder"><img src="assets/rice-1kg.png" alt="有機一等米 小包裝" style="width:100%;height:100%;object-fit:cover"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">長濱有機一等米</h3>
+              <p class="product-card__spec">小包裝・高雄 139 品種<br>有機種植・篩選率 55%</p>
+              <div class="product-card__price">
+                <span class="text-inquire">價格洽詢</span>
+              </div>
+            </div>
+            <div class="product-card__action">
+              <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S06｜美妝面膜商品區 ── -->
+    <section id="cosmetics" class="product-section">
+      <div class="section-header">
+        <h2 class="section-header__title">美妝保養</h2>
+        <p class="section-header__desc">
+          獨家白玉蝸牛萃取原液，來自台東長濱自然放養蝸牛的天然饋贈。
+        </p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="product-grid">
+        <!-- 賦活精萃露 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder"><img src="assets/essence.png" alt="賦活精萃露" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">賦活精萃露</h3>
+            <p class="product-card__spec">白玉蝸牛萃取原液<br>修護・賦活・保濕</p>
+            <div class="product-card__price">
+              <span class="text-inquire">價格洽詢</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+          </div>
+        </div>
+
+        <!-- 緊緻撫紋面膜 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder"><img src="assets/cosmetics-2.jpg" alt="緊緻撫紋面膜" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">緊緻撫紋面膜</h3>
+            <p class="product-card__spec">白玉蝸牛萃取原液<br>緊緻・撫紋・修護</p>
+            <div class="product-card__price">
+              <span class="text-inquire">價格洽詢</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+          </div>
+        </div>
+
+        <!-- 保濕活顏面膜 -->
+        <div class="product-card">
+          <div class="product-card__image">
+            <div class="product-card__placeholder"><img src="assets/cosmetics-1.jpg" alt="保濕活顏面膜" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">保濕活顏面膜</h3>
+            <p class="product-card__spec">白玉蝸牛萃取原液<br>保濕・活顏・亮膚</p>
+            <div class="product-card__price">
+              <span class="text-inquire">價格洽詢</span>
+            </div>
+          </div>
+          <div class="product-card__action">
+            <a href="#contact-info" class="btn-secondary">洽詢訂購</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S07｜即食調理商品區 ── -->
+    <section id="instant" class="product-section--alt">
+      <div class="product-section__inner" style="padding: clamp(48px, 6vw, 80px) var(--content-padding); max-width: var(--content-max); margin: 0 auto;">
+        <div class="section-header">
+          <h2 class="section-header__title">即食調理</h2>
+          <p class="section-header__desc">
+            加熱即食的部落風味，在家也能享用白玉螺的鮮甜。
+          </p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-card__image">
+              <div class="product-card__placeholder"><img src="assets/baked-escargot.png" alt="韓式醬菇白玉螺調理包" style="width:100%;height:100%;object-fit:cover"></div>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__name">韓式醬菇白玉螺調理包</h3>
+              <p class="product-card__spec">200 克/包<br>可搭辣炒年糕・部隊鍋・韓式烤肉</p>
+              <div class="product-card__price">
+                <span class="text-price">NT$330</span>
+              </div>
+            </div>
+            <div class="product-card__action">
+              <a href="#contact-info" class="btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S08｜農場導覽體驗區（獨立版型，深色背景區隔）── -->
+    <section id="tour" class="tour-section">
+      <div class="tour-section__inner">
+        <div class="tour-section__image">
+          <div class="tour-section__image-placeholder"><img src="assets/tour.png" alt="農場導覽體驗" style="width:100%;height:100%;object-fit:cover;border-radius:var(--card-radius)"></div>
+        </div>
+
+        <div class="tour-section__content">
+          <p class="tour-section__subtitle">預約制・一天限定一組</p>
+          <h2>農場導覽體驗</h2>
+          <p class="tour-section__desc">
+            走進台東長濱的白玉蝸牛養殖場，體驗市場上唯一的全戶外養殖環境。
+            從田間導覽到親手餵食採集，用一個下午的時間，感受土地與生命的溫度。
+          </p>
+
+          <div class="tour-section__details">
+            <div class="tour-detail">
+              <svg class="tour-detail__icon" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+              </svg>
+              <span class="tour-detail__text">
+                <strong>每日 14:00 — 16:00</strong>（冬季 14:30 起）
+              </span>
+            </div>
+            <div class="tour-detail">
+              <svg class="tour-detail__icon" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"/>
+                <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+              </svg>
+              <span class="tour-detail__text">
+                田間導覽・蝸牛餵食採集體驗<br>
+                經典下午茶・蝸牛殼彩繪
+              </span>
+            </div>
+          </div>
+
+          <div class="tour-section__prices">
+            <div class="tour-price">
+              <p class="tour-price__label">成人</p>
+              <p class="tour-price__amount">NT$1,280</p>
+            </div>
+            <div class="tour-price">
+              <p class="tour-price__label">未滿 18 歲</p>
+              <p class="tour-price__amount">NT$980</p>
+            </div>
+          </div>
+
+          <a href="#contact-info" class="btn-tour">預約導覽</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 聯絡錨點（按鈕跳轉目標）── -->
+    <section id="contact-info" class="product-section" style="text-align: center; padding-top: clamp(40px, 5vw, 64px); padding-bottom: clamp(32px, 4vw, 48px);">
+      <h2 style="margin-bottom: 12px;">訂購與預約</h2>
+      <p class="section-header__desc" style="max-width: 480px; margin: 0 auto 24px;">
+        歡迎透過以下方式聯繫我們訂購商品或預約農場導覽
+      </p>
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+        <a href="tel:0932198152" class="btn-primary">📞 0932-198-152</a>
+        <a href="mailto:hello@awosfarm.com" class="btn-secondary">✉ hello@awosfarm.com</a>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 24px;">
+        <a href="https://www.facebook.com/awos_farm" class="link-underline" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/awos_farm" class="link-underline" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       S09｜Footer
+       ============================================================ -->
+  <footer class="shop-footer">
+    <div class="shop-footer__inner">
+      <div>
+        <p class="shop-footer__brand">AWOS FARM</p>
+        <div class="shop-footer__contact">
+          台東縣長濱鄉八桑安 65 之 1 號<br>
+          <a href="tel:0932198152">0932-198-152</a>　｜　
+          <a href="mailto:hello@awosfarm.com">hello@awosfarm.com</a>
+        </div>
+        <div class="shop-footer__social">
+          <a href="https://www.facebook.com/awos_farm" target="_blank" rel="noopener">FB</a>
+          <a href="https://www.instagram.com/awos_farm" target="_blank" rel="noopener">IG</a>
+        </div>
+      </div>
+
+      <div class="shop-footer__story">
+        <a href="https://awosfarm.com" class="shop-footer__story-link" target="_blank" rel="noopener">
+          想更了解我們的故事？<br>前往 awosfarm.com →
+        </a>
+        <p class="shop-footer__copy">© 2026 宏成農品有限公司</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       S02 JS｜分類跳轉列 Active 狀態追蹤
+       ============================================================ -->
+  <script>
+    (function () {
+      const navLinks = document.querySelectorAll('.category-nav__link');
+      const sections = [];
+
+      navLinks.forEach(link => {
+        const id = link.getAttribute('data-section');
+        const section = document.getElementById(id);
+        if (section) sections.push({ id, el: section, link });
+      });
+
+      // IntersectionObserver: 追蹤當前可見區塊，標示 active
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(l => l.classList.remove('active'));
+            const activeLink = document.querySelector(`.category-nav__link[data-section="${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, {
+        rootMargin: '-120px 0px -60% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(s => observer.observe(s.el));
+
+      // 點擊跳轉時的 smooth scroll（備援，配合 CSS scroll-behavior）
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          const id = link.getAttribute('data-section');
+          const target = document.getElementById(id);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      // 簡易淡入效果（商店版：純 opacity，不做 translateY）
+      const fadeEls = document.querySelectorAll('.product-card, .tour-section__inner');
+      const fadeObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      fadeEls.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.25s ease-out';
+        fadeObserver.observe(el);
+      });
+    })();
+  </script>
+
 </body>
 </html>

@@ -1,0 +1,234 @@
+/* ============================================================
+   S01｜商店版設計代幣
+   沿用 T01 品牌色系，互動時間全面縮短 (0.15~0.3s)
+   目標感受：乾脆俐落，不是優雅緩慢
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;400;500;600&display=swap');
+
+:root {
+  /* ── 色彩（療癒海邊田園調，低飽和度沉穩感）── */
+  --color-primary:    #4A5A3F;   /* 田野墨綠 */
+  --color-secondary:  #C9A876;   /* 暖沙棕 */
+  --color-accent:     #C97C4D;   /* 陶土橘（強調色，極少量） */
+  --color-ocean:      #5C7A8A;   /* 海洋藍灰 */
+  --bg-main:          #F7F4EE;   /* 米白背景 */
+  --bg-section-alt:   #E6E0D6;   /* 交替區塊背景（暖灰棕，參考農場地圖底色）*/
+  --bg-tour:          #4A5A3F;   /* 導覽體驗區深色背景 */
+  --text-main:        #2E2A24;   /* 深灰棕文字 */
+  --text-light:       #7A7570;   /* 淺灰棕輔助文字 */
+  --text-on-dark:     #F7F4EE;   /* 深色背景上的文字 */
+  --border-light:     #DDD8CF;   /* 淡色邊線 */
+  --card-bg:          #FFFFFF;   /* 卡片背景 */
+  --card-shadow:      0 2px 12px rgba(46, 42, 36, 0.06);
+
+  /* ── 字體 ── */
+  --font-heading:  'Noto Serif TC', serif;
+  --font-body:     'Noto Sans TC', sans-serif;
+
+  /* ── 商店版快速轉場（0.15~0.3s，乾脆俐落）── */
+  --transition-fast:    all 0.15s ease-out;
+  --transition-base:    all 0.25s ease-out;
+  --transition-img:     all 0.3s ease-out;
+  --transition-fade:    opacity 0.2s ease-out;
+
+  /* ── 尺寸 ── */
+  --header-height:      64px;
+  --nav-height:         48px;
+  --content-max:        1200px;
+  --content-padding:    clamp(16px, 4vw, 40px);
+  --card-radius:        8px;
+  --btn-radius:         6px;
+}
+
+/* ── 全域基底 ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--nav-height) + 16px);
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 標題 ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  color: var(--color-primary);
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: 0.05em;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+}
+
+/* ── 圖片淡入（簡化版，無位移）── */
+.fade-in {
+  opacity: 0;
+  transition: var(--transition-fade);
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+/* ── 圖片 hover（商店版較快）── */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: var(--transition-img);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-zoom:hover img {
+  transform: scale(1.04);
+}
+
+/* ── 實色 CTA 按鈕（商店專用，允許醒目）── */
+.btn-primary {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: var(--color-primary);
+  color: var(--text-on-dark);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background-color: #3D4D34;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 90, 63, 0.25);
+}
+
+/* 洽詢按鈕（次要樣式）*/
+.btn-secondary {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: var(--text-on-dark);
+}
+
+/* 預約按鈕（導覽體驗用，深色背景上）*/
+.btn-tour {
+  display: inline-block;
+  padding: 14px 36px;
+  background-color: var(--color-secondary);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-align: center;
+}
+
+.btn-tour:hover {
+  background-color: #D4B68A;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(201, 168, 118, 0.35);
+}
+
+/* ── 底線連結（輔助用）── */
+.link-underline {
+  position: relative;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-accent);
+  transition: var(--transition-base);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── 文字工具 ── */
+.text-small {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.text-price {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+.text-price-range {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text-main);
+}
+
+.text-inquire {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+}
