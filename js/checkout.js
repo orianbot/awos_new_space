@@ -1,396 +1,345 @@
 /**
- * S11｜下單流程前端佔位 (checkout.js)
- * ------------------------------------
- * startOrder() 函式 + 訂單面板 UI。
- * Phase 1：走「聯絡方式下單」流程（電話/信箱/LINE）。
- * Phase 2：接金流後，依 CHECKOUT_CONFIG.activeChannel 切換到線上付款。
+ * S11b｜金流串接前端佔位（修正版 checkout.js）
+ * --------------------------------------------
+ * 1. 提供 AWOS_CHECKOUT 命名空間與佔位函式：
+ *    - AWOS_CHECKOUT.payWithECPay(productData)
+ *    - AWOS_CHECKOUT.payWithLinePay(productData)
  *
- * 依賴：products.js、checkout-config.js（需先載入）
+ * 2. startOrder(productId) 控制彈窗顯示：
+ *    - 有實際價格之商品：彈窗只放 [綠界 ECPay 付款] 與 [LINE Pay 付款] 兩顆按鈕。
+ *    - 「洽詢報價／僅供餐廳採購」等無固定售價商品：保留聯絡方式（電話、信箱、IG、FB）。
+ *
+ * ⚠️ 不含任何真實或虛構的 MerchantID、HashKey、Channel Secret 等金鑰。
  */
 
 (function () {
   'use strict';
 
-  // ── 訂單狀態 ──
-  const orderState = {
-    product: null,
-    quantity: 1,
-    note: '',
-    panelEl: null,
+  // ══════════════════════════════════════════════
+  //  AWOS_CHECKOUT 核心命名空間與佔位函式
+  // ══════════════════════════════════════════════
+  window.AWOS_CHECKOUT = {
+    /**
+     * 綠界 ECPay 結帳佔位函式
+     * @param {Object} productData 商品物件資料
+     */
+    payWithECPay: function (productData) {
+      console.log('[ECPay]', productData);
+      // TODO: 之後在這裡呼叫自己後端的綠界結帳API
+      alert('綠界付款功能串接中');
+    },
+
+    /**
+     * LINE Pay 結帳佔位函式
+     * @param {Object} productData 商品物件資料
+     */
+    payWithLinePay: function (productData) {
+      console.log('[LinePay]', productData);
+      // TODO: 之後在這裡呼叫自己後端的LINE Pay結帳API
+      alert('LINE Pay 付款功能串接中');
+    }
   };
 
-  // ── 生成訂單編號 ──
-  function generateOrderId() {
-    const prefix = CHECKOUT_CONFIG.order.orderIdPrefix;
-    const ts = Date.now().toString(36).toUpperCase();
-    const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-    return `${prefix}-${ts}-${rand}`;
-  }
+  // ── 彈窗內部狀態 ──
+  const checkoutModal = {
+    el: null,
+    currentProduct: null
+  };
 
-  // ── 建立訂單面板 DOM ──
-  function createOrderPanel() {
-    if (orderState.panelEl) return orderState.panelEl;
+  // ── 建立或取得彈窗 DOM ──
+  function getOrCreateModal() {
+    if (checkoutModal.el) return checkoutModal.el;
 
-    const panel = document.createElement('div');
-    panel.id = 'order-panel';
-    panel.className = 'order-panel';
-    panel.setAttribute('role', 'dialog');
-    panel.setAttribute('aria-modal', 'true');
-    panel.setAttribute('aria-label', '訂購面板');
-    panel.innerHTML = `
-      <div class="order-panel__backdrop"></div>
-      <div class="order-panel__card">
-        <button class="order-panel__close" aria-label="關閉">&times;</button>
-        <div class="order-panel__body">
-          <div class="order-panel__product">
-            <img class="order-panel__img" src="" alt="">
-            <div class="order-panel__info">
-              <h3 class="order-panel__name"></h3>
-              <p class="order-panel__spec"></p>
-              <p class="order-panel__price"></p>
-            </div>
+    const modal = document.createElement('div');
+    modal.id = 'awos-checkout-modal';
+    modal.className = 'awos-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.innerHTML = `
+      <div class="awos-modal__backdrop"></div>
+      <div class="awos-modal__container">
+        <button class="awos-modal__close" aria-label="關閉視窗">&times;</button>
+        <div class="awos-modal__header">
+          <img class="awos-modal__thumb" src="" alt="">
+          <div class="awos-modal__title-box">
+            <h3 class="awos-modal__name"></h3>
+            <p class="awos-modal__spec"></p>
+            <p class="awos-modal__price"></p>
           </div>
-
-          <div class="order-panel__channel" id="order-channel">
-            <!-- Phase 1: 聯絡方式下單 -->
-            <div class="order-panel__contact-section">
-              <p class="order-panel__channel-title">選擇下單方式</p>
-              <div class="order-panel__contact-buttons">
-                <a id="order-phone" href="" class="order-btn order-btn--phone">
-                  📞 電話訂購
-                </a>
-                <a id="order-email" href="" class="order-btn order-btn--email">
-                  ✉ 信箱訂購
-                </a>
-                <a id="order-ig" href="" class="order-btn order-btn--ig" target="_blank" rel="noopener">
-                  📷 IG 私訊
-                </a>
-                <a id="order-fb" href="" class="order-btn order-btn--fb" target="_blank" rel="noopener">
-                  💬 FB 私訊
-                </a>
-              </div>
-            </div>
-
-            <!-- Phase 2: 線上付款（未啟用時隱藏） -->
-            <div class="order-panel__pay-section" id="order-pay-section" style="display:none;">
-              <button id="order-pay-btn" class="order-btn order-btn--pay">
-                前往付款
-              </button>
-            </div>
-          </div>
+        </div>
+        <div class="awos-modal__body" id="awos-modal-body">
+          <!-- 依商品類型動態注入按鈕 -->
         </div>
       </div>
     `;
 
-    document.body.appendChild(panel);
-    orderState.panelEl = panel;
+    document.body.appendChild(modal);
+    checkoutModal.el = modal;
 
-    // 事件綁定
-    panel.querySelector('.order-panel__close').addEventListener('click', closeOrderPanel);
-    panel.querySelector('.order-panel__backdrop').addEventListener('click', closeOrderPanel);
+    // 事件監聽：點擊背景或關閉按鈕
+    modal.querySelector('.awos-modal__close').addEventListener('click', closeModal);
+    modal.querySelector('.awos-modal__backdrop').addEventListener('click', closeModal);
 
     // ESC 關閉
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && panel.classList.contains('open')) {
-        closeOrderPanel();
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
       }
     });
 
-    return panel;
+    return modal;
   }
 
-  // ── 組裝訊息文字（電話/信箱/社群用）──
-  function buildOrderMessage(product) {
-    const lines = [
-      `【AWOS 農場訂購】`,
-      `商品：${product.name}${product.grade ? ` (${product.grade})` : ''}`,
-      `規格：${product.spec}`,
-      `價格：${product.priceDisplay}`,
-      ``,
-      `姓名：`,
-      `電話：`,
-      `數量：`,
-      product.shipping === 'booking' ? `希望日期：` : `配送地址：`,
-      `備註：`,
-    ];
-    return lines.join('\n');
-  }
+  // ── 開啟彈窗 ──
+  function openModal(product) {
+    const modal = getOrCreateModal();
+    checkoutModal.currentProduct = product;
 
-  // ── 填入面板內容 ──
-  function populatePanel(product) {
-    const panel = orderState.panelEl;
-    const contact = CHECKOUT_CONFIG.contact;
+    // 填入商品資訊
+    modal.querySelector('.awos-modal__thumb').src = product.image || '';
+    modal.querySelector('.awos-modal__thumb').alt = product.name || '';
+    modal.querySelector('.awos-modal__name').textContent =
+      product.name + (product.grade ? ' (' + product.grade + ')' : '');
+    modal.querySelector('.awos-modal__spec').textContent = product.spec || '';
+    modal.querySelector('.awos-modal__price').textContent = product.priceDisplay || '';
 
-    panel.querySelector('.order-panel__img').src = product.image;
-    panel.querySelector('.order-panel__img').alt = product.name;
-    panel.querySelector('.order-panel__name').textContent =
-      product.name + (product.grade ? ` (${product.grade})` : '');
-    panel.querySelector('.order-panel__spec').textContent = product.spec;
-    panel.querySelector('.order-panel__price').textContent = product.priceDisplay;
+    const bodyEl = modal.querySelector('#awos-modal-body');
+    bodyEl.innerHTML = '';
 
-    // 電話
-    const msg = buildOrderMessage(product);
-    panel.querySelector('#order-phone').href = `tel:${contact.phone.replace(/-/g, '')}`;
-    // 信箱
-    const subject = encodeURIComponent(`AWOS訂購 — ${product.name}`);
-    const body = encodeURIComponent(msg);
-    panel.querySelector('#order-email').href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
-    // IG
-    panel.querySelector('#order-ig').href = contact.instagram;
-    // FB
-    panel.querySelector('#order-fb').href = contact.facebook;
+    // 判斷是否為「洽詢報價/僅供餐廳採購」類型
+    const isInquiryOnly = product.orderType === 'inquiry' || product.price === null;
 
-    // Phase 2: 線上付款按鈕
-    const paySection = panel.querySelector('#order-pay-section');
-    const activeChannel = CHECKOUT_CONFIG.activeChannel;
-    if (activeChannel !== 'contact' && CHECKOUT_CONFIG[activeChannel]?.enabled) {
-      paySection.style.display = 'block';
-      panel.querySelector('#order-pay-btn').onclick = () => processPayment(product);
+    if (isInquiryOnly) {
+      // ── 例外：洽詢報價商品（八桑安特級螺肉等）──
+      const notice = document.createElement('p');
+      notice.className = 'awos-modal__notice';
+      notice.textContent = '此品項為餐廳等級採購／價格洽詢，請透過以下方式與我們聯繫：';
+      bodyEl.appendChild(notice);
+
+      const contactBox = document.createElement('div');
+      contactBox.className = 'awos-contact-buttons';
+      contactBox.innerHTML = `
+        <a href="tel:0932198152" class="awos-btn awos-btn--phone">📞 電話洽詢 (0932-198-152)</a>
+        <a href="mailto:hello@awosfarm.com?subject=${encodeURIComponent('AWOS採購洽詢 — ' + product.name)}" class="awos-btn awos-btn--secondary">✉ 信箱洽詢</a>
+        <a href="https://www.instagram.com/awos_farm" target="_blank" rel="noopener" class="awos-btn awos-btn--secondary">📷 Instagram 私訊</a>
+        <a href="https://www.facebook.com/awossnailfarm" target="_blank" rel="noopener" class="awos-btn awos-btn--secondary">💬 Facebook 私訊</a>
+      `;
+      bodyEl.appendChild(contactBox);
+
     } else {
-      paySection.style.display = 'none';
+      // ── 一般商品：只放「綠界 ECPay 付款」與「LINE Pay 付款」──
+      const payBox = document.createElement('div');
+      payBox.className = 'awos-payment-buttons';
+      payBox.innerHTML = `
+        <button type="button" class="awos-btn awos-btn--ecpay" id="btn-pay-ecpay">
+          綠界 ECPay 付款
+        </button>
+        <button type="button" class="awos-btn awos-btn--linepay" id="btn-pay-linepay">
+          LINE Pay 付款
+        </button>
+      `;
+      bodyEl.appendChild(payBox);
+
+      // 綁定點擊事件至佔位函式
+      payBox.querySelector('#btn-pay-ecpay').addEventListener('click', function () {
+        AWOS_CHECKOUT.payWithECPay(checkoutModal.currentProduct);
+      });
+
+      payBox.querySelector('#btn-pay-linepay').addEventListener('click', function () {
+        AWOS_CHECKOUT.payWithLinePay(checkoutModal.currentProduct);
+      });
     }
-  }
 
-  // ── Phase 2: 線上付款流程（佔位）──
-  function processPayment(product) {
-    const channel = CHECKOUT_CONFIG.activeChannel;
-    const orderId = generateOrderId();
-
-    console.log(`[AWOS Checkout] 準備付款`, {
-      orderId,
-      channel,
-      product: product.id,
-      price: product.price,
-    });
-
-    // TODO: 依 channel 呼叫對應的後端 API
-    // 例如 ECPay：POST 到後端產生交易表單，再 redirect
-    // 例如 LINE Pay：POST 到後端取得 paymentUrl，再 redirect
-
-    alert(
-      `⚠️ 線上付款功能尚未啟用\n\n` +
-      `訂單編號：${orderId}\n` +
-      `金流管道：${channel}\n` +
-      `商品：${product.name}\n` +
-      `金額：${product.priceDisplay}\n\n` +
-      `請先使用電話或信箱訂購。`
-    );
-  }
-
-  // ── 開啟面板 ──
-  function openOrderPanel(product) {
-    const panel = createOrderPanel();
-    orderState.product = product;
-    populatePanel(product);
-    panel.classList.add('open');
+    modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
-  // ── 關閉面板 ──
-  function closeOrderPanel() {
-    if (orderState.panelEl) {
-      orderState.panelEl.classList.remove('open');
+  // ── 關閉彈窗 ──
+  function closeModal() {
+    if (checkoutModal.el) {
+      checkoutModal.el.classList.remove('active');
       document.body.style.overflow = '';
     }
   }
 
   // ══════════════════════════════════════════════
-  //  startOrder() — 公開 API
+  //  全域 startOrder 函式
   // ══════════════════════════════════════════════
-  /**
-   * 觸發下單流程。
-   * @param {string} productId — 對應 AWOS_PRODUCTS 的 key
-   *
-   * 使用方式：
-   *   <button onclick="startOrder('escargot_premium')">立即訂購</button>
-   *
-   * 或在 JS 中：
-   *   startOrder('tour_adult');
-   */
   window.startOrder = function (productId) {
-    const product = getProduct(productId);
-    if (!product) {
-      console.error(`[AWOS Checkout] 找不到商品: ${productId}`);
-      return;
+    if (typeof getProduct === 'function') {
+      const product = getProduct(productId);
+      if (product) {
+        openModal(product);
+        return;
+      }
     }
 
-    // inquiry 類型（洽詢報價）直接跳到聯絡方式
-    if (product.orderType === 'inquiry') {
-      openOrderPanel(product);
-      return;
-    }
-
-    // direct / booking 類型
-    openOrderPanel(product);
+    console.warn('[AWOS] 找不到指定商品資料:', productId);
   };
 
   // ══════════════════════════════════════════════
-  //  注入面板樣式
+  //  注入彈窗樣式
   // ══════════════════════════════════════════════
   const style = document.createElement('style');
   style.textContent = `
-    /* ── 訂單面板 ── */
-    .order-panel {
+    .awos-modal {
       position: fixed;
       inset: 0;
       z-index: 9999;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
-      pointer-events: none;
+      padding: 16px;
       opacity: 0;
-      transition: opacity 0.25s ease-out;
+      pointer-events: none;
+      transition: opacity 0.2s ease-out;
     }
-    .order-panel.open {
-      pointer-events: auto;
+    .awos-modal.active {
       opacity: 1;
+      pointer-events: auto;
     }
-    .order-panel__backdrop {
+    .awos-modal__backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(46, 42, 36, 0.5);
+      background: rgba(46, 42, 36, 0.55);
+      backdrop-filter: blur(2px);
     }
-    .order-panel__card {
+    .awos-modal__container {
       position: relative;
       background: var(--bg-main, #F7F4EE);
-      border-radius: 16px 16px 0 0;
+      border-radius: 14px;
       width: 100%;
-      max-width: 480px;
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 0.3s ease-out;
-      box-shadow: 0 -4px 24px rgba(46, 42, 36, 0.12);
+      max-width: 440px;
+      padding: 28px 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s ease-out;
     }
-    .order-panel.open .order-panel__card {
-      transform: translateY(0);
+    .awos-modal.active .awos-modal__container {
+      transform: translateY(0) scale(1);
     }
-    @media (min-width: 769px) {
-      .order-panel {
-        align-items: center;
-      }
-      .order-panel__card {
-        border-radius: 12px;
-        max-width: 420px;
-        transform: translateY(20px) scale(0.97);
-      }
-      .order-panel.open .order-panel__card {
-        transform: translateY(0) scale(1);
-      }
-    }
-    .order-panel__close {
+    .awos-modal__close {
       position: absolute;
-      top: 12px;
+      top: 14px;
       right: 16px;
       background: none;
       border: none;
       font-size: 1.6rem;
+      line-height: 1;
       color: var(--text-light, #7A7570);
       cursor: pointer;
-      line-height: 1;
       padding: 4px;
       transition: color 0.15s;
     }
-    .order-panel__close:hover {
+    .awos-modal__close:hover {
       color: var(--text-main, #2E2A24);
     }
-    .order-panel__body {
-      padding: 28px 24px 32px;
-    }
-    .order-panel__product {
+    .awos-modal__header {
       display: flex;
       gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
+      align-items: center;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--border-light, #DDD8CF);
     }
-    .order-panel__img {
-      width: 80px;
-      height: 80px;
+    .awos-modal__thumb {
+      width: 76px;
+      height: 76px;
       object-fit: cover;
       border-radius: 8px;
-      flex-shrink: 0;
       background: #E6E0D6;
+      flex-shrink: 0;
     }
-    .order-panel__info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    .awos-modal__title-box {
+      flex: 1;
+      min-width: 0;
     }
-    .order-panel__name {
-      font-family: var(--font-heading, 'Noto Serif TC', serif);
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--text-main, #2E2A24);
-      margin: 0;
-    }
-    .order-panel__spec {
-      font-size: 0.85rem;
-      color: var(--text-light, #7A7570);
-      margin: 0;
-    }
-    .order-panel__price {
+    .awos-modal__name {
       font-family: var(--font-heading, 'Noto Serif TC', serif);
       font-size: 1.15rem;
-      font-weight: 500;
-      color: var(--color-primary, #4A5A3F);
-      margin: 4px 0 0;
-    }
-    .order-panel__channel-title {
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-main, #2E2A24);
-      margin: 0 0 12px;
+      margin: 0 0 4px;
     }
-    .order-panel__contact-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .awos-modal__spec {
+      font-size: 0.85rem;
+      color: var(--text-light, #7A7570);
+      margin: 0 0 6px;
+      line-height: 1.4;
+    }
+    .awos-modal__price {
+      font-family: var(--font-heading, 'Noto Serif TC', serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-primary, #4A5A3F);
+      margin: 0;
+    }
+    .awos-modal__notice {
+      font-size: 0.9rem;
+      color: var(--text-main, #2E2A24);
+      margin: 0 0 16px;
+      line-height: 1.5;
+    }
+    .awos-payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .awos-contact-buttons {
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
-    .order-btn {
+    .awos-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s ease-out;
-      border: 1.5px solid var(--border-light, #DDD8CF);
-      background: var(--card-bg, #fff);
-      color: var(--text-main, #2E2A24);
-    }
-    .order-btn:hover {
-      border-color: var(--color-primary, #4A5A3F);
-      background: rgba(74, 90, 63, 0.04);
-    }
-    .order-btn--phone {
-      border-color: var(--color-primary, #4A5A3F);
-      background: var(--color-primary, #4A5A3F);
-      color: var(--text-on-dark, #F7F4EE);
-    }
-    .order-btn--phone:hover {
-      background: #3D4D34;
-      border-color: #3D4D34;
-      color: #fff;
-    }
-    .order-btn--pay {
-      grid-column: 1 / -1;
-      background: var(--color-primary, #4A5A3F);
-      color: var(--text-on-dark, #F7F4EE);
-      border-color: var(--color-primary, #4A5A3F);
-      font-size: 1rem;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
       width: 100%;
-      margin-top: 12px;
+      padding: 13px 18px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: all 0.2s ease-out;
+      box-sizing: border-box;
     }
-    .order-btn--pay:hover {
-      background: #3D4D34;
+    /* 綠界 ECPay 按鈕 */
+    .awos-btn--ecpay {
+      background-color: #007A3D;
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 122, 61, 0.25);
+    }
+    .awos-btn--ecpay:hover {
+      background-color: #006030;
+    }
+    /* LINE Pay 按鈕 */
+    .awos-btn--linepay {
+      background-color: #00B900;
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(0, 185, 0, 0.25);
+    }
+    .awos-btn--linepay:hover {
+      background-color: #009900;
+    }
+    /* 洽詢電話按鈕 */
+    .awos-btn--phone {
+      background-color: var(--color-primary, #4A5A3F);
+      color: #FFFFFF;
+    }
+    .awos-btn--phone:hover {
+      background-color: #3B4932;
+    }
+    /* 次要按鈕 */
+    .awos-btn--secondary {
+      background-color: #FFFFFF;
+      color: var(--text-main, #2E2A24);
+      border-color: var(--border-light, #DDD8CF);
+    }
+    .awos-btn--secondary:hover {
+      border-color: var(--color-primary, #4A5A3F);
+      background-color: #FAF8F5;
     }
   `;
   document.head.appendChild(style);
