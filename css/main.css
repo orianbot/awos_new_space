@@ -1,0 +1,896 @@
+/* ============================================================
+   AWOS 農場 — 全站共用樣式 (main.css)
+   視覺設計代幣：
+   --awos-primary:   #4A5A3F (田野墨綠)
+   --awos-secondary: #C9A876 (暖沙棕)
+   --awos-accent:    #C97C4D (陶土橘)
+   --awos-bg:        #F7F4EE (米白)
+   --awos-text:      #2E2A24 (深灰棕)
+   轉場：按鈕 0.25s ease-out；捲動淡入 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;400;500;600&display=swap');
+
+:root {
+  --awos-primary:    #4A5A3F;
+  --awos-secondary:  #C9A876;
+  --awos-accent:     #C97C4D;
+  --awos-bg:         #F7F4EE;
+  --awos-text:       #2E2A24;
+  --awos-text-muted: #7A7570;
+  --awos-border:     #DDD8CF;
+  --awos-card-bg:    #FFFFFF;
+  --awos-alt-bg:     #EFECE5;
+
+  --font-heading: 'Noto Serif TC', serif;
+  --font-body:    'Noto Sans TC', sans-serif;
+
+  --transition-btn:    all 0.25s ease-out;
+  --transition-reveal: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  --transition-header: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+
+  --header-height: 72px;
+  --sticky-nav-height: 52px;
+  --content-max: 1200px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--sticky-nav-height) + 16px);
+}
+
+body {
+  background-color: var(--awos-bg);
+  color: var(--awos-text);
+  font-family: var(--font-body);
+  line-height: 1.8;
+  font-size: 1rem;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--awos-primary);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── 捲動淡入特效 ── */
+.awos-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: var(--transition-reveal);
+  will-change: opacity, transform;
+}
+.awos-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 按鈕系統 ── */
+.awos-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--awos-primary);
+  color: #FFFFFF !important;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: 1px solid var(--awos-primary);
+  cursor: pointer;
+  transition: var(--transition-btn);
+  text-align: center;
+}
+.awos-btn-primary:hover {
+  background-color: #384530;
+  border-color: #384530;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 90, 63, 0.25);
+}
+
+.awos-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--awos-primary) !important;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: 1px solid var(--awos-primary);
+  cursor: pointer;
+  transition: var(--transition-btn);
+  text-align: center;
+}
+.awos-btn-secondary:hover {
+  background-color: var(--awos-primary);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+}
+
+/* ── 固定 Header ── */
+.awos-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 48px);
+  background-color: transparent;
+  transition: var(--transition-header);
+}
+.awos-header.scrolled {
+  background-color: rgba(247, 244, 238, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--awos-border);
+  box-shadow: 0 2px 16px rgba(46, 42, 36, 0.05);
+}
+.awos-header.solid-bg {
+  background-color: rgba(247, 244, 238, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--awos-border);
+}
+
+.awos-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.awos-header__logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+.awos-header__logo-fallback {
+  width: 40px;
+  height: 40px;
+  background: var(--awos-primary);
+  color: #FFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+}
+.awos-header__logo-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--awos-primary);
+  letter-spacing: 0.12em;
+}
+
+/* 桌機導覽選單 */
+.awos-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.awos-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+.awos-nav__item {
+  position: relative;
+}
+.awos-nav__link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--awos-text);
+  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+.awos-nav__link:hover,
+.awos-nav__link.active {
+  color: var(--awos-accent);
+}
+
+/* 下拉選單 */
+.awos-dropdown {
+  position: relative;
+}
+.awos-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: #FFFFFF;
+  border: 1px solid var(--awos-border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(46, 42, 36, 0.1);
+  padding: 8px 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  z-index: 100;
+}
+.awos-dropdown:hover .awos-dropdown__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.awos-dropdown__item a {
+  display: block;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  color: var(--awos-text);
+  transition: background 0.15s, color 0.15s;
+}
+.awos-dropdown__item a:hover {
+  background: var(--awos-bg);
+  color: var(--awos-accent);
+}
+
+/* 右側線上商店按鈕 */
+.awos-header__action {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 漢堡選單按鈕 */
+.awos-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+.awos-hamburger__line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--awos-primary);
+  margin: 3px 0;
+  transition: all 0.3s ease;
+}
+.awos-hamburger.open .awos-hamburger__line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.awos-hamburger.open .awos-hamburger__line:nth-child(2) {
+  opacity: 0;
+}
+.awos-hamburger.open .awos-hamburger__line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* 手機版抽屜導覽 */
+.awos-mobile-menu {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(247, 244, 238, 0.98);
+  backdrop-filter: blur(12px);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.awos-mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+.awos-mobile-nav {
+  list-style: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 320px;
+  width: 100%;
+}
+.awos-mobile-nav__item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.awos-mobile-menu.open .awos-mobile-nav__item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.awos-mobile-nav__link {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--awos-primary);
+  display: block;
+  padding: 6px 0;
+}
+.awos-mobile-subnav {
+  list-style: none;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.awos-mobile-subnav a {
+  font-size: 0.95rem;
+  color: var(--awos-text-muted);
+}
+
+/* ── Hero 區塊 ── */
+.awos-hero {
+  position: relative;
+  width: 100%;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 20px 80px;
+  background-color: #E2DBD0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.awos-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(46, 42, 36, 0.45) 0%, rgba(46, 42, 36, 0.6) 100%);
+  z-index: 1;
+}
+.awos-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  color: #FFFFFF;
+}
+.awos-hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.35;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.awos-hero__subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  color: #F7F4EE;
+  margin-bottom: 40px;
+  letter-spacing: 0.06em;
+  opacity: 0.92;
+}
+.awos-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF !important;
+  font-size: 0.95rem;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s;
+}
+.awos-hero__btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #FFFFFF;
+  transform: translateY(2px);
+}
+
+/* ── 分類快速跳轉列 (sticky) ── */
+.awos-sticky-nav {
+  position: sticky;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  height: var(--sticky-nav-height);
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--awos-border);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(46, 42, 36, 0.04);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.awos-sticky-nav.hidden-on-hero {
+  display: none;
+}
+.awos-sticky-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 28px);
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 20px;
+  scrollbar-width: none;
+  max-width: var(--content-max);
+  width: 100%;
+  justify-content: center;
+}
+.awos-sticky-nav__inner::-webkit-scrollbar {
+  display: none;
+}
+.awos-sticky-nav__link {
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--awos-text);
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.awos-sticky-nav__link:hover {
+  color: var(--awos-accent);
+  background: var(--awos-bg);
+}
+.awos-sticky-nav__link.active {
+  background: var(--awos-primary);
+  color: #FFFFFF !important;
+}
+
+/* ── 商品網格與卡片規格 ── */
+.awos-section {
+  padding: clamp(64px, 8vw, 100px) clamp(20px, 4vw, 48px);
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+.awos-section--alt {
+  background-color: var(--awos-alt-bg);
+  max-width: 100%;
+}
+.awos-section--alt .awos-section__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.awos-section__header {
+  text-align: center;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+.awos-section__tag {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--awos-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.awos-section__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  margin-bottom: 12px;
+}
+.awos-section__desc {
+  font-size: 1rem;
+  color: var(--awos-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 三欄、兩欄、單欄 Grid */
+.awos-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 36px);
+}
+@media (max-width: 992px) {
+  .awos-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .awos-product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 單張商品卡片 */
+.awos-card {
+  background: var(--awos-card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--awos-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.awos-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(46, 42, 36, 0.08);
+}
+.awos-card__img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #E2DBD0;
+}
+.awos-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.awos-card:hover .awos-card__img {
+  transform: scale(1.04);
+}
+.awos-card__badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--awos-primary);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.awos-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.awos-card__title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 6px;
+  color: var(--awos-primary);
+}
+.awos-card__spec {
+  font-size: 0.88rem;
+  color: var(--awos-text-muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+  min-height: 2.7em;
+}
+.awos-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #F0ECE4;
+}
+.awos-card__price {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--awos-accent);
+  font-weight: 500;
+}
+.awos-card__price--inquiry {
+  font-size: 0.95rem;
+  color: var(--awos-text-muted);
+  font-family: var(--font-body);
+}
+
+/* ── 蝸堡單張特色卡片 ── */
+.awos-bao-card {
+  max-width: 880px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid var(--awos-border);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .awos-bao-card {
+    grid-template-columns: 1fr;
+  }
+}
+.awos-bao-card__img-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #E2DBD0;
+}
+.awos-bao-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.awos-bao-card:hover .awos-bao-card__img {
+  transform: scale(1.04);
+}
+.awos-bao-card__body {
+  padding: clamp(24px, 4vw, 44px);
+}
+
+/* ── 農場導覽獨立體驗區塊 ── */
+.awos-tour-block {
+  background: var(--awos-primary);
+  color: #F7F4EE;
+  border-radius: 12px;
+  padding: clamp(36px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(32px, 5vw, 56px);
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .awos-tour-block {
+    grid-template-columns: 1fr;
+  }
+}
+.awos-tour-block h3,
+.awos-tour-block h2 {
+  color: #FFFFFF;
+}
+.awos-tour__highlights {
+  list-style: none;
+  margin: 24px 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.awos-tour__highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.awos-tour__highlight-item::before {
+  content: '✦';
+  color: var(--awos-secondary);
+  font-size: 1rem;
+}
+.awos-tour__pricing {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.awos-tour__price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.awos-tour__price-row:last-child {
+  border-bottom: none;
+}
+.awos-tour__img-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.awos-tour__img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.awos-tour__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── 品牌精簡區塊 (首頁) ── */
+.awos-story-preview {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 100px) 20px;
+}
+.awos-story-preview__text {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 2;
+  color: var(--awos-text);
+  margin-bottom: 32px;
+}
+
+/* ── 全站共用 Footer ── */
+.awos-footer {
+  background-color: #24221E;
+  color: #D6D0C5;
+  padding: clamp(60px, 8vw, 84px) clamp(20px, 4vw, 48px) 32px;
+  font-size: 0.92rem;
+}
+.awos-footer__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px);
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+@media (max-width: 820px) {
+  .awos-footer__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+.awos-footer__brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+.awos-footer__company {
+  font-size: 0.88rem;
+  color: #A39D93;
+  margin-bottom: 16px;
+}
+.awos-footer__info-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+.awos-footer__title {
+  color: #FFFFFF;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+.awos-footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.awos-footer__links a {
+  color: #D6D0C5;
+  transition: color 0.2s;
+}
+.awos-footer__links a:hover {
+  color: var(--awos-secondary);
+}
+.awos-footer__social {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+.awos-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  transition: all 0.2s;
+}
+.awos-footer__social a:hover {
+  background: var(--awos-primary);
+}
+.awos-footer__bottom {
+  max-width: var(--content-max);
+  margin: 32px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: #8C867C;
+}
+
+/* ── FAQ 摺疊元件 ── */
+.awos-faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.awos-faq-item {
+  background: #FFFFFF;
+  border: 1px solid var(--awos-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.awos-faq-question {
+  width: 100%;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--awos-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  gap: 16px;
+}
+.awos-faq-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.awos-faq-item.open .awos-faq-icon {
+  transform: rotate(45deg);
+}
+.awos-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 24px;
+  color: #555;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+.awos-faq-item.open .awos-faq-answer {
+  max-height: 400px;
+  padding: 0 24px 24px;
+}
+
+/* ── 佔位區塊 ── */
+#contact-placeholder {
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+/* 響應式微調 */
+@media (max-width: 900px) {
+  .awos-header__nav {
+    display: none;
+  }
+  .awos-hamburger {
+    display: flex;
+  }
+}

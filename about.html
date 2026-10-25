@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>品牌故事 ｜ AWOS 農場 - 台東長濱白玉蝸牛</title>
+  <meta name="description" content="Nga'ay ho！2018年阿美族青年文宏程返鄉長濱八桑安，以阿美族語蝸牛「AWOS」為名，打造全台灣首屈一指的友善戶外白玉蝸牛農場。">
+  <meta property="og:title" content="品牌故事 ｜ AWOS 農場">
+  <meta property="og:description" content="阿美族返鄉青年的土地溫暖堅持，五大營運項目與長濱小農共好生活。">
+  <meta property="og:image" content="assets/farm-map.png">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .about-hero {
+      padding: clamp(120px, 15vw, 160px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 72px);
+      text-align: center;
+      background: var(--awos-alt-bg);
+      border-bottom: 1px solid var(--awos-border);
+    }
+    .about-story-block {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: clamp(48px, 6vw, 80px) 20px;
+    }
+    .about-greeting {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--awos-accent);
+      margin-bottom: 16px;
+    }
+    .about-prose {
+      font-size: 1.05rem;
+      line-height: 2.1;
+      color: var(--awos-text);
+      margin-bottom: 32px;
+    }
+    .about-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .pillar-card {
+      background: #FFFFFF;
+      border: 1px solid var(--awos-border);
+      border-radius: 8px;
+      padding: 32px 28px;
+      transition: transform 0.25s ease;
+    }
+    .pillar-card:hover {
+      transform: translateY(-4px);
+    }
+    .pillar-num {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--awos-accent);
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+    .pillar-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: var(--awos-primary);
+    }
+    .pillar-text {
+      font-size: 0.95rem;
+      color: var(--awos-text-muted);
+      line-height: 1.8;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(24px, 4vw, 48px);
+      max-width: 800px;
+      margin: 48px auto 0;
+    }
+    @media (max-width: 640px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .team-card {
+      text-align: center;
+      background: #FFFFFF;
+      border: 1px solid var(--awos-border);
+      border-radius: 8px;
+      padding: 36px 24px;
+    }
+    .team-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #E2DBD0;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--awos-secondary);
+    }
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 固定 Header -->
+  <header class="awos-header solid-bg">
+    <a href="index.html" class="awos-header__logo">
+      <img src="assets/cropped-cropped-宏成蝸牛Logo-去背-1.png" alt="AWOS 農場 Logo" class="awos-header__logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+      <span class="awos-header__logo-fallback" style="display:none;">A</span>
+      <span class="awos-header__logo-title">AWOS 農場</span>
+    </a>
+
+    <nav class="awos-header__nav">
+      <ul class="awos-nav__list">
+        <li class="awos-nav__item awos-dropdown">
+          <a href="shop.html" class="awos-nav__link">商品 ▾</a>
+          <ul class="awos-dropdown__menu">
+            <li class="awos-dropdown__item"><a href="shop.html#escargot">白玉螺肉</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#bao">美味蝸堡</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#rice">有機米</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#cosmetics">美妝面膜</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#instant">即食調理</a></li>
+          </ul>
+        </li>
+        <li class="awos-nav__item"><a href="tour.html" class="awos-nav__link">農場導覽</a></li>
+        <li class="awos-nav__item"><a href="about.html" class="awos-nav__link active">關於</a></li>
+        <li class="awos-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-nav__link">部落格 ↗</a></li>
+        <li class="awos-nav__item"><a href="contact.html" class="awos-nav__link">聯繫與FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="awos-header__action">
+      <a href="shop.html" class="awos-btn-primary">線上商店</a>
+      <button class="awos-hamburger" aria-label="選單開關" aria-expanded="false">
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 手機抽屜選單 -->
+  <div class="awos-mobile-menu">
+    <ul class="awos-mobile-nav">
+      <li class="awos-mobile-nav__item">
+        <a href="shop.html" class="awos-mobile-nav__link">商品總覽</a>
+        <div class="awos-mobile-subnav">
+          <a href="shop.html#escargot">白玉螺肉</a>
+          <a href="shop.html#bao">美味蝸堡</a>
+          <a href="shop.html#rice">有機米</a>
+          <a href="shop.html#cosmetics">美妝面膜</a>
+          <a href="shop.html#instant">即食調理</a>
+        </div>
+      </li>
+      <li class="awos-mobile-nav__item"><a href="tour.html" class="awos-mobile-nav__link">農場導覽</a></li>
+      <li class="awos-mobile-nav__item"><a href="about.html" class="awos-mobile-nav__link">關於 AWOS</a></li>
+      <li class="awos-mobile-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-mobile-nav__link">部落格 ↗</a></li>
+      <li class="awos-mobile-nav__item"><a href="contact.html" class="awos-mobile-nav__link">聯繫與FAQ</a></li>
+      <li class="awos-mobile-nav__item" style="margin-top: 16px;">
+        <a href="shop.html" class="awos-btn-primary" style="width: 100%;">進入線上商店</a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- 頁面 Header -->
+    <section class="about-hero awos-reveal">
+      <span class="awos-section__tag">ABOUT AWOS FARM</span>
+      <h1 class="awos-section__title">土地與人的回甘故事</h1>
+      <p class="awos-section__desc">從太平洋畔的八桑安出發，一份阿美族青年敬天愛地的真摯堅持</p>
+    </section>
+
+    <!-- 品牌故事全文 -->
+    <section class="about-story-block awos-reveal">
+      <h2 class="about-greeting">Nga'ay ho！你好，歡迎來到長濱八桑安</h2>
+      
+      <p class="about-prose">
+        2018 年，阿美族青年文宏程決定告別都會的繁忙節奏，回到故鄉台東縣長濱鄉八桑安部落。面對家中世代守護的農耕土地，他看見了這片依山傍海、未受工業污染的純淨環境，以及大自然賦予這座東海岸農村的珍貴契機。
+      </p>
+
+      <p class="about-prose">
+        在八桑安，阿美族人稱蝸牛為「<strong>AWOS</strong>」。
+      </p>
+
+      <p class="about-prose">
+        文宏程毅然將農地轉型為白玉蝸牛的全戶外半放牧圈養農場。堅持不噴灑化學農藥與除草劑，每天清晨以在地友善種植的青木瓜、南瓜，佐以有機米糠、黃豆粉與蚵殼粉精心調配飼糧。我們只挑選 120 至 150 天成熟度最佳的白玉蝸牛，螺肉色澤晶瑩白皙、厚實甘甜，迅速成為全台頂級法式星級餐廳的主廚指定珍饈。
+      </p>
+
+      <div style="margin: 48px 0; border-radius: 8px; overflow: hidden; background: #E2DBD0; aspect-ratio: 16/9;">
+        <img src="assets/farm-map.png" alt="AWOS 農場座落長濱太平洋畔環境" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <!-- 五大營運項目 -->
+      <div style="margin-top: 64px;">
+        <span class="awos-section__tag">OUR BUSINESS PILLARS</span>
+        <h2 style="font-size: 2rem; margin-bottom: 16px;">AWOS 農場五大營運項目</h2>
+        <p style="color: var(--awos-text-muted); font-size: 1rem;">
+          我們不只是飼養蝸牛，更串連了長濱這座慢靈魂小鎮的生活、文化與產地價值：
+        </p>
+
+        <div class="about-pillars">
+          <div class="pillar-card">
+            <div class="pillar-num">01</div>
+            <h3 class="pillar-title">星級白玉螺肉友善養殖與供應</h3>
+            <p class="pillar-text">全戶外有機環境放養，專供星級法式餐廳、高端餐飲與頂級老饕採購，以急速超低溫冷凍真空保鮮，鎖住比現撈更豐滿細緻的清甜彈牙滋味。</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">02</div>
+            <h3 class="pillar-title">長濱有機一等良質米契作耕耘</h3>
+            <p class="pillar-text">汲取金剛山純淨泉水與太平洋水氣，與在地長輩小農契作高雄 139 品種有機米，讓每一口白飯都充滿土地的紮實回甘。</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">03</div>
+            <h3 class="pillar-title">天然白玉蝸牛原液美妝與面膜開發</h3>
+            <p class="pillar-text">嚴格提煉純淨白玉蝸牛天然黏液多醣體與膠原修護成分，研發賦活精萃露與親膚面膜，帶給肌膚來自東海岸大自然的透亮修護。</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">04</div>
+            <h3 class="pillar-title">產地特色即食調理與手作風味蝸堡</h3>
+            <p class="pillar-text">結合長濱野生刺蔥、手烘麵包與特製韓式醬菇風味，打破法式蝸牛料理門檻，讓全台灣朋友在日常廚房都能輕鬆享用產地星級美味。</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-num">05</div>
+            <h3 class="pillar-title">每日限定一組深度田間導覽與生命教育</h3>
+            <p class="pillar-text">主理人親自導覽，一天僅接待一組貴賓。走入田間餵食觀察、彩繪蝸牛殼並享用私房下午茶，讓旅人深刻體會友善農耕與自然共生的感動。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 在長濱生活的我們 -->
+      <div style="margin-top: 80px;">
+        <span class="awos-section__tag">COMMUNITY</span>
+        <h2 style="font-size: 2rem; text-align: center; margin-bottom: 12px;">在長濱生活的我們</h2>
+        <p style="text-align: center; color: var(--awos-text-muted); max-width: 600px; margin: 0 auto;">
+          土地的生命力，來自每一位默默耕耘、用心生活的在地夥伴。
+        </p>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">
+              <!-- 人像圖片佔位 -->
+              <span style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--awos-primary);">文</span>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 6px;">文宏程</h3>
+            <p style="color: var(--awos-accent); font-size: 0.9rem; font-weight: 500; margin-bottom: 14px;">AWOS 農場創辦人 ｜ 返鄉阿美族青年</p>
+            <p style="font-size: 0.92rem; color: var(--awos-text-muted); line-height: 1.7;">
+              「把步伐慢下來，你會看見蝸牛的堅韌，以及土地最誠實的慷慨回報。」
+            </p>
+          </div>
+
+          <div class="team-card">
+            <div class="team-avatar">
+              <!-- 人像圖片佔位 -->
+              <span style="font-family: var(--font-heading); font-size: 2.2rem; color: var(--awos-primary);">農</span>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 6px;">長濱在地小農夥伴</h3>
+            <p style="color: var(--awos-accent); font-size: 0.9rem; font-weight: 500; margin-bottom: 14px;">八桑安耕作長輩 ｜ 土地守護團隊</p>
+            <p style="font-size: 0.92rem; color: var(--awos-text-muted); line-height: 1.7;">
+              「帶著幾十年的農耕手藝，與年輕人一起把長濱的好米與好食材分享出去。」
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 全站共用 Footer -->
+  <footer class="awos-footer">
+    <div class="awos-footer__inner">
+      <div>
+        <h3 class="awos-footer__brand-title">A-Wos 農場</h3>
+        <p class="awos-footer__company">宏成農品有限公司</p>
+        <ul class="awos-footer__info-list">
+          <li><strong>地址：</strong>台東縣長濱鄉八桑安路65之1號</li>
+          <li><strong>電話：</strong>0932-198-152 ｜ (089) 801-568</li>
+          <li><strong>Email：</strong>hello@awosfarm.com</li>
+          <li><strong>營業時間：</strong>14:00 - 16:00（預約制）</li>
+        </ul>
+        <div class="awos-footer__social">
+          <a href="https://www.facebook.com/awossnailfarm" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+          <a href="https://www.instagram.com/awos_farm" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">快速導覽</h4>
+        <ul class="awos-footer__links">
+          <li><a href="shop.html">線上商店全品項</a></li>
+          <li><a href="tour.html">農場導覽體驗預約</a></li>
+          <li><a href="about.html">關於品牌與主理人</a></li>
+          <li><a href="https://awosfarm.com/bao/" target="_blank" rel="noopener noreferrer">美味蝸堡預訂 ↗</a></li>
+          <li><a href="https://awosfarm.com/learn-from-the-best/" target="_blank" rel="noopener noreferrer">專業養殖課程 ↗</a></li>
+          <li><a href="contact.html">聯繫我們與常見問題</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">購物須知與條款</h4>
+        <ul class="awos-footer__links">
+          <li><a href="https://awosfarm.com/privacy-policy/" target="_blank" rel="noopener noreferrer">隱私權政策 ↗</a></li>
+          <li><a href="https://awosfarm.com/payment-and-delivery/" target="_blank" rel="noopener noreferrer">付款與運送須知 ↗</a></li>
+          <li><a href="https://awosfarm.com/refund-and-returns-policy/" target="_blank" rel="noopener noreferrer">退換貨政策 ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="awos-footer__bottom">
+      <p>© 2026 宏成農品有限公司 All Rights Reserved.</p>
+      <p>白玉蝸牛友善養殖 ｜ 台東長濱鄉八桑安</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

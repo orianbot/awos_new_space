@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聯繫我們與常見問題 ｜ AWOS 農場 - 台東長濱白玉蝸牛</title>
+  <meta name="description" content="聯繫 AWOS 農場與常見問題 FAQ 彙整：地址台東縣長濱鄉八桑安路65之1號、電話 0932-198-152、餐廳採購詢價、導覽時段、發票開立與 AWOS 阿美族文化意涵。">
+  <meta property="og:title" content="聯繫我們與常見問題 ｜ AWOS 農場">
+  <meta property="og:description" content="包含餐廳大量採購諮詢、導覽預約時間、白玉蝸牛特色介紹與線上訂購佔位服務。">
+  <meta property="og:image" content="assets/farm-map.png">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .contact-hero {
+      padding: clamp(120px, 15vw, 160px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 72px);
+      text-align: center;
+      background: var(--awos-alt-bg);
+      border-bottom: 1px solid var(--awos-border);
+    }
+    .contact-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(48px, 6vw, 80px) 20px;
+    }
+    .contact-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 768px) {
+      .contact-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .contact-info-card {
+      background: #FFFFFF;
+      border: 1px solid var(--awos-border);
+      border-radius: 8px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .contact-info-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--awos-primary);
+    }
+    .contact-info-card p {
+      font-size: 0.95rem;
+      color: var(--awos-text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* 金流/訂購按鈕佔位區塊 */
+    .checkout-placeholder-box {
+      background: #FFFFFF;
+      border: 2px dashed var(--awos-primary);
+      border-radius: 12px;
+      padding: clamp(32px, 5vw, 48px);
+      text-align: center;
+      margin: 56px 0;
+    }
+    .placeholder-badge {
+      display: inline-block;
+      background: var(--awos-secondary);
+      color: #2E2A24;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 固定 Header -->
+  <header class="awos-header solid-bg">
+    <a href="index.html" class="awos-header__logo">
+      <img src="assets/cropped-cropped-宏成蝸牛Logo-去背-1.png" alt="AWOS 農場 Logo" class="awos-header__logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+      <span class="awos-header__logo-fallback" style="display:none;">A</span>
+      <span class="awos-header__logo-title">AWOS 農場</span>
+    </a>
+
+    <nav class="awos-header__nav">
+      <ul class="awos-nav__list">
+        <li class="awos-nav__item awos-dropdown">
+          <a href="shop.html" class="awos-nav__link">商品 ▾</a>
+          <ul class="awos-dropdown__menu">
+            <li class="awos-dropdown__item"><a href="shop.html#escargot">白玉螺肉</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#bao">美味蝸堡</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#rice">有機米</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#cosmetics">美妝面膜</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#instant">即食調理</a></li>
+          </ul>
+        </li>
+        <li class="awos-nav__item"><a href="tour.html" class="awos-nav__link">農場導覽</a></li>
+        <li class="awos-nav__item"><a href="about.html" class="awos-nav__link">關於</a></li>
+        <li class="awos-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-nav__link">部落格 ↗</a></li>
+        <li class="awos-nav__item"><a href="contact.html" class="awos-nav__link active">聯繫與FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="awos-header__action">
+      <a href="shop.html" class="awos-btn-primary">線上商店</a>
+      <button class="awos-hamburger" aria-label="選單開關" aria-expanded="false">
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 手機抽屜選單 -->
+  <div class="awos-mobile-menu">
+    <ul class="awos-mobile-nav">
+      <li class="awos-mobile-nav__item">
+        <a href="shop.html" class="awos-mobile-nav__link">商品總覽</a>
+        <div class="awos-mobile-subnav">
+          <a href="shop.html#escargot">白玉螺肉</a>
+          <a href="shop.html#bao">美味蝸堡</a>
+          <a href="shop.html#rice">有機米</a>
+          <a href="shop.html#cosmetics">美妝面膜</a>
+          <a href="shop.html#instant">即食調理</a>
+        </div>
+      </li>
+      <li class="awos-mobile-nav__item"><a href="tour.html" class="awos-mobile-nav__link">農場導覽</a></li>
+      <li class="awos-mobile-nav__item"><a href="about.html" class="awos-mobile-nav__link">關於 AWOS</a></li>
+      <li class="awos-mobile-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-mobile-nav__link">部落格 ↗</a></li>
+      <li class="awos-mobile-nav__item"><a href="contact.html" class="awos-mobile-nav__link">聯繫與FAQ</a></li>
+      <li class="awos-mobile-nav__item" style="margin-top: 16px;">
+        <a href="shop.html" class="awos-btn-primary" style="width: 100%;">進入線上商店</a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- 頁面 Header -->
+    <section class="contact-hero awos-reveal">
+      <span class="awos-section__tag">GET IN TOUCH & FAQ</span>
+      <h1 class="awos-section__title">聯繫我們 ｜ 常見問題</h1>
+      <p class="awos-section__desc">有任何採購、導覽預約或產地疑問？我們非常樂意為您解答</p>
+    </section>
+
+    <div class="contact-wrap">
+      <!-- 聯繫資訊卡片 -->
+      <div class="contact-cards-grid awos-reveal">
+        <div class="contact-info-card">
+          <h3>農場位置</h3>
+          <p>台東縣長濱鄉八桑安路65之1號<br>（預約制，請先預訂）</p>
+        </div>
+        <div class="contact-info-card">
+          <h3>電話聯繫</h3>
+          <p>
+            行動：<a href="tel:0932198152" style="color: var(--awos-primary); font-weight: 500;">0932-198-152</a><br>
+            市話：(089) 801-568
+          </p>
+        </div>
+        <div class="contact-info-card">
+          <h3>線上諮詢與社群</h3>
+          <p>
+            Email：<a href="mailto:hello@awosfarm.com" style="color: var(--awos-primary);">hello@awosfarm.com</a><br>
+            FB / IG：awos_farm
+          </p>
+        </div>
+      </div>
+
+      <!-- id="contact-placeholder" 金流結帳與下單按鈕佔位區塊 -->
+      <section id="contact-placeholder" class="checkout-placeholder-box awos-reveal">
+        <span class="placeholder-badge">CHECKOUT / ORDER PLACEHOLDER</span>
+        <h2 style="font-size: 1.6rem; margin-bottom: 12px; color: var(--awos-primary);">線上訂購與下單服務</h2>
+        <p style="color: var(--awos-text-muted); font-size: 0.95rem; max-width: 620px; margin: 0 auto 24px; line-height: 1.8;">
+          您剛才點擊了「立即訂購」或「預約時段」。目前全站前端視覺頁面已完成，之後這裡將無縫串接綠界 ECPay、LINE Pay 線上金流付款或即時訂單表單。
+        </p>
+
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <a href="tel:0932198152" class="awos-btn-primary">
+            立即來電人工訂購：0932-198-152
+          </a>
+          <a href="mailto:hello@awosfarm.com?subject=AWOS農場商品訂購洽詢" class="awos-btn-secondary">
+            發送 Email 採購需求
+          </a>
+        </div>
+      </section>
+
+      <!-- 常見問題 FAQ（從 awosfarm.com/contact-and-faq/ 原文整理，共 7 條） -->
+      <section class="awos-reveal" style="margin-top: 64px;">
+        <div style="text-align: center; margin-bottom: 36px;">
+          <span class="awos-section__tag">FREQUENTLY ASKED QUESTIONS</span>
+          <h2 style="font-size: 2rem; margin-bottom: 8px;">常見問題 FAQ</h2>
+          <p style="color: var(--awos-text-muted); font-size: 0.95rem;">整理來自顧客、主廚與訪客最常提出的疑問</p>
+        </div>
+
+        <div class="awos-faq-list">
+          <!-- FAQ 1 -->
+          <div class="awos-faq-item open">
+            <button class="awos-faq-question" type="button">
+              <span>AWOS農場的白玉蝸牛，憑什麼？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              主要供應全台米其林星級餐廳。我們座落於台東後山長濱有機環境，堅持全戶外半放牧圈養。每日餵食友善青木瓜、南瓜混合有機米糠、黃豆粉與天然蚵殼粉。螺肉嚴格只挑選 120-150 天成熟度之白玉蝸牛，豐潤且肥美。採急速超低溫冷凍真空保鮮存放，解凍後料理口感完勝現撈！
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>我是餐廳主廚或採購經理，如何採購？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              您可以直接來電 0932-198-152，或發信至 hello@awosfarm.com 說明貴餐廳的需求等級、規格與每週/每月用量，農場專人會在一個工作天內回覆專屬批發報價單以及冷鏈運送細節確認。
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>農場導覽時間與梯次安排？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              冬季時段：14:30 - 16:00；春夏季時段：14:00 - 16:00 或 16:00 - 18:00。為了維持最高規格的細緻體驗，農場一天只招待一組客人。可預約日期請提前於官網聯繫或來電預約。
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>農場導覽包含哪些內容？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              包含：① 戶外田間生態導覽 ② 溫馴白玉蝸牛親餵與採集體驗 ③ 農場經典手作下午茶「風味蝸堡」一份 ④ 獨家蝸牛殼彩繪紀念品製作與產地伴手禮帶回家。
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>可以開立發票嗎？公司報帳需要打統編可以嗎？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              所有交易皆會依法開立正式發票！若有統編、抬頭或公家機關核銷等特別需求，請於下單或預約時註記，或 Email 至 hello@awosfarm.com，我們會妥善開立並隨貨寄出。
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>「AWOS」這個名字是什麼意思？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              在台東長濱八桑安，AWOS 是阿美族語的「蝸牛」。我們以族語為名，代表著青年返鄉對傳統部落文化、敬天愛地農耕態度的深厚傳承。
+            </div>
+          </div>
+
+          <!-- FAQ 7 -->
+          <div class="awos-faq-item">
+            <button class="awos-faq-question" type="button">
+              <span>冷凍白玉螺肉到貨後如何保存與料理？</span>
+              <span class="awos-faq-icon">+</span>
+            </button>
+            <div class="awos-faq-answer">
+              全程黑貓低溫冷凍運送，收到後請立即置於 -18°C 冷凍庫保存，可保鮮 6 個月。料理前請連同真空袋置於冷藏室退冰，或流水解凍約 15 分鐘即可直接下鍋炒九層塔、刺蔥、焗烤或韓式醬燒，切勿過度滾煮以保持鮮彈脆度。
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- 全站共用 Footer -->
+  <footer class="awos-footer">
+    <div class="awos-footer__inner">
+      <div>
+        <h3 class="awos-footer__brand-title">A-Wos 農場</h3>
+        <p class="awos-footer__company">宏成農品有限公司</p>
+        <ul class="awos-footer__info-list">
+          <li><strong>地址：</strong>台東縣長濱鄉八桑安路65之1號</li>
+          <li><strong>電話：</strong>0932-198-152 ｜ (089) 801-568</li>
+          <li><strong>Email：</strong>hello@awosfarm.com</li>
+          <li><strong>營業時間：</strong>14:00 - 16:00（預約制）</li>
+        </ul>
+        <div class="awos-footer__social">
+          <a href="https://www.facebook.com/awossnailfarm" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+          <a href="https://www.instagram.com/awos_farm" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">快速導覽</h4>
+        <ul class="awos-footer__links">
+          <li><a href="shop.html">線上商店全品項</a></li>
+          <li><a href="tour.html">農場導覽體驗預約</a></li>
+          <li><a href="about.html">關於品牌與主理人</a></li>
+          <li><a href="https://awosfarm.com/bao/" target="_blank" rel="noopener noreferrer">美味蝸堡預訂 ↗</a></li>
+          <li><a href="https://awosfarm.com/learn-from-the-best/" target="_blank" rel="noopener noreferrer">專業養殖課程 ↗</a></li>
+          <li><a href="contact.html">聯繫我們與常見問題</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">購物須知與條款</h4>
+        <ul class="awos-footer__links">
+          <li><a href="https://awosfarm.com/privacy-policy/" target="_blank" rel="noopener noreferrer">隱私權政策 ↗</a></li>
+          <li><a href="https://awosfarm.com/payment-and-delivery/" target="_blank" rel="noopener noreferrer">付款與運送須知 ↗</a></li>
+          <li><a href="https://awosfarm.com/refund-and-returns-policy/" target="_blank" rel="noopener noreferrer">退換貨政策 ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="awos-footer__bottom">
+      <p>© 2026 宏成農品有限公司 All Rights Reserved.</p>
+      <p>白玉蝸牛友善養殖 ｜ 台東長濱鄉八桑安</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

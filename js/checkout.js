@@ -26,7 +26,7 @@
     payWithECPay: function (productData) {
       console.log('[ECPay]', productData);
       // TODO: 之後在這裡呼叫自己後端的綠界結帳API
-      alert('綠界付款功能串接中');
+      alert('綠界付款功能串接中' );
     },
 
     /**

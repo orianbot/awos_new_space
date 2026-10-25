@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>線上商店 ｜ AWOS 農場 - 白玉螺肉・有機米・蝸堡・即食・美妝</title>
+  <meta name="description" content="AWOS 農場線上商店：米其林指定白玉螺肉、限量美味手作蝸堡、長濱有機米、白玉蝸牛萃取美妝保養與即食調理包。產地直送。">
+  <meta property="og:title" content="線上商店 ｜ AWOS 農場">
+  <meta property="og:description" content="全品項商品總覽：一屏快速瀏覽、直接下單，品嚐台東長濱最純淨的風土美味。">
+  <meta property="og:image" content="assets/farm-map.png">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .shop-page-hero {
+      padding: clamp(120px, 14vw, 150px) clamp(20px, 4vw, 48px) clamp(36px, 5vw, 60px);
+      text-align: center;
+      background: var(--awos-alt-bg);
+      border-bottom: 1px solid var(--awos-border);
+    }
+    .shop-sticky-nav {
+      position: sticky;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      height: var(--sticky-nav-height);
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--awos-border);
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(46, 42, 36, 0.04);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 固定 Header -->
+  <header class="awos-header solid-bg">
+    <a href="index.html" class="awos-header__logo">
+      <img src="assets/cropped-cropped-宏成蝸牛Logo-去背-1.png" alt="AWOS 農場 Logo" class="awos-header__logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+      <span class="awos-header__logo-fallback" style="display:none;">A</span>
+      <span class="awos-header__logo-title">AWOS 農場</span>
+    </a>
+
+    <nav class="awos-header__nav">
+      <ul class="awos-nav__list">
+        <li class="awos-nav__item awos-dropdown">
+          <a href="shop.html" class="awos-nav__link active">商品 ▾</a>
+          <ul class="awos-dropdown__menu">
+            <li class="awos-dropdown__item"><a href="shop.html#escargot">白玉螺肉</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#bao">美味蝸堡</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#rice">有機米</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#cosmetics">美妝面膜</a></li>
+            <li class="awos-dropdown__item"><a href="shop.html#instant">即食調理</a></li>
+          </ul>
+        </li>
+        <li class="awos-nav__item"><a href="tour.html" class="awos-nav__link">農場導覽</a></li>
+        <li class="awos-nav__item"><a href="about.html" class="awos-nav__link">關於</a></li>
+        <li class="awos-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-nav__link">部落格 ↗</a></li>
+        <li class="awos-nav__item"><a href="contact.html" class="awos-nav__link">聯繫與FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="awos-header__action">
+      <a href="shop.html" class="awos-btn-primary">線上商店</a>
+      <button class="awos-hamburger" aria-label="選單開關" aria-expanded="false">
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+        <span class="awos-hamburger__line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 手機抽屜選單 -->
+  <div class="awos-mobile-menu">
+    <ul class="awos-mobile-nav">
+      <li class="awos-mobile-nav__item">
+        <a href="shop.html" class="awos-mobile-nav__link">商品總覽</a>
+        <div class="awos-mobile-subnav">
+          <a href="shop.html#escargot">白玉螺肉</a>
+          <a href="shop.html#bao">美味蝸堡</a>
+          <a href="shop.html#rice">有機米</a>
+          <a href="shop.html#cosmetics">美妝面膜</a>
+          <a href="shop.html#instant">即食調理</a>
+        </div>
+      </li>
+      <li class="awos-mobile-nav__item"><a href="tour.html" class="awos-mobile-nav__link">農場導覽</a></li>
+      <li class="awos-mobile-nav__item"><a href="about.html" class="awos-mobile-nav__link">關於 AWOS</a></li>
+      <li class="awos-mobile-nav__item"><a href="https://awosfarm.com/blog/" target="_blank" rel="noopener noreferrer" class="awos-mobile-nav__link">部落格 ↗</a></li>
+      <li class="awos-mobile-nav__item"><a href="contact.html" class="awos-mobile-nav__link">聯繫與FAQ</a></li>
+      <li class="awos-mobile-nav__item" style="margin-top: 16px;">
+        <a href="shop.html" class="awos-btn-primary" style="width: 100%;">進入線上商店</a>
+      </li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- 簡單頁面標題（取代全螢幕 Hero，直接進入商品選購） -->
+    <section class="shop-page-hero awos-reveal">
+      <span class="awos-section__tag">ONLINE SHOP</span>
+      <h1 class="awos-section__title">AWOS 農場商品總覽</h1>
+      <p class="awos-section__desc">台東長濱產地友善直供・第一屏快速瀏覽與直接選購下單</p>
+    </section>
+
+    <!-- 分類快速跳轉列 (sticky) -->
+    <nav class="shop-sticky-nav" aria-label="商品分類導覽">
+      <div class="awos-sticky-nav__inner">
+        <a href="#escargot" class="awos-sticky-nav__link active">白玉螺肉</a>
+        <a href="#bao" class="awos-sticky-nav__link">美味蝸堡</a>
+        <a href="#rice" class="awos-sticky-nav__link">有機米</a>
+        <a href="#cosmetics" class="awos-sticky-nav__link">美妝面膜</a>
+        <a href="#instant" class="awos-sticky-nav__link">即食調理</a>
+        <a href="#tour" class="awos-sticky-nav__link">農場導覽</a>
+      </div>
+    </nav>
+
+    <!-- 1. 白玉螺肉區塊（三張卡片） -->
+    <section id="escargot" class="awos-section">
+      <div class="awos-section__header awos-reveal">
+        <span class="awos-section__tag">SIGNATURE ESCARGOT</span>
+        <h2 class="awos-section__title">白玉螺肉</h2>
+        <p class="awos-section__desc">米其林主廚指定選用。飼以青木瓜、南瓜與有機米糠，螺肉純淨白皙、豐厚彈牙。</p>
+      </div>
+
+      <div class="awos-product-grid">
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/escargot-sample.png" alt="八桑安(蝸)牛(特級)" class="awos-card__img" onerror="this.src='assets/escargot-detail.jpg';">
+            <span class="awos-card__badge">特級限定</span>
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">八桑安(蝸)牛(特級)</h3>
+            <p class="awos-card__spec">約 55 顆/斤・僅供餐廳等級採購</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price awos-card__price--inquiry">洽詢報價</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/escargot-detail.jpg" alt="頂級白玉螺肉" class="awos-card__img">
+            <span class="awos-card__badge">熱銷首選</span>
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">頂級白玉螺肉</h3>
+            <p class="awos-card__spec">約 70 顆/斤・真空冷凍包裝</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price">NT$ 600 起</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/escargot-detail.jpg" alt="A級白玉螺肉" class="awos-card__img">
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">A級白玉螺肉</h3>
+            <p class="awos-card__spec">約 90 顆/斤・真空冷凍包裝</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price">NT$ 800 起</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. 美味蝸堡區塊 -->
+    <section id="bao" class="awos-section awos-section--alt">
+      <div class="awos-section__inner">
+        <div class="awos-section__header awos-reveal">
+          <span class="awos-section__tag">FARM DELICACY</span>
+          <h2 class="awos-section__title">美味蝸堡</h2>
+          <p class="awos-section__desc">長濱在地自烘手作麵包夾入秘製白玉螺肉，產地直送的無可取代鮮味。</p>
+        </div>
+
+        <article class="awos-bao-card awos-reveal">
+          <div class="awos-bao-card__img-wrap">
+            <img src="assets/bao-hero.jpg" alt="AWOS 秘製美味蝸堡" class="awos-bao-card__img">
+          </div>
+          <div class="awos-bao-card__body">
+            <span style="color: var(--awos-accent); font-size: 0.85rem; font-weight: 600;">限量預約手作</span>
+            <h3 style="font-size: 1.6rem; margin: 8px 0 16px; color: var(--awos-primary);">經典八桑安風味蝸堡</h3>
+            <p style="color: var(--awos-text-muted); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.8;">
+              結合長濱刺蔥、自製法式青醬香草與現炒白玉螺肉，口感紮實且香氣撲鼻。每日新鮮手作，<strong>需提前 2 天預訂</strong>。
+            </p>
+            <a href="https://awosfarm.com/bao/" target="_blank" rel="noopener noreferrer" class="awos-btn-primary">
+              了解蝸堡與線上預訂 ↗
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. 有機米區塊 -->
+    <section id="rice" class="awos-section">
+      <div class="awos-section__header awos-reveal">
+        <span class="awos-section__tag">CHANGBIN ORGANIC RICE</span>
+        <h2 class="awos-section__title">長濱有機米</h2>
+        <p class="awos-section__desc">太平洋水氣與金剛山泉水灌溉，高雄 139 品種一等良質米，米粒飽滿Q彈。</p>
+      </div>
+
+      <div class="awos-product-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto;">
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/rice-2kg.png" alt="長濱有機一等米(大)" class="awos-card__img">
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">長濱有機一等米（大包裝）</h3>
+            <p class="awos-card__spec">高雄 139 品種・箱裝純淨天然產地直送</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price awos-card__price--inquiry">價格待補</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/rice-1kg.png" alt="長濱有機一等米(小)" class="awos-card__img">
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">長濱有機一等米（小包裝）</h3>
+            <p class="awos-card__spec">高雄 139 品種・真空 1 公斤袋裝方便品嚐</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price awos-card__price--inquiry">價格待補</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. 美妝面膜區塊 -->
+    <section id="cosmetics" class="awos-section awos-section--alt">
+      <div class="awos-section__inner">
+        <div class="awos-section__header awos-reveal">
+          <span class="awos-section__tag">SNAIL ESSENCE SKINCARE</span>
+          <h2 class="awos-section__title">美妝面膜保養</h2>
+          <p class="awos-section__desc">八桑安天然白玉蝸牛萃取原液，富含天然多醣體與膠原蛋白，深層修護滋養肌膚。</p>
+        </div>
+
+        <div class="awos-product-grid">
+          <article class="awos-card awos-reveal">
+            <div class="awos-card__img-wrap">
+              <img src="assets/essence.png" alt="賦活精萃露" class="awos-card__img">
+            </div>
+            <div class="awos-card__body">
+              <h3 class="awos-card__title">賦活精萃露</h3>
+              <p class="awos-card__spec">白玉蝸牛萃取原液・滴滴晶純深層滲透</p>
+              <div class="awos-card__footer">
+                <span class="awos-card__price awos-card__price--inquiry">價格待補</span>
+                <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="awos-card awos-reveal">
+            <div class="awos-card__img-wrap">
+              <img src="assets/cosmetics-2.jpg" alt="緊緻撫紋面膜" class="awos-card__img">
+            </div>
+            <div class="awos-card__body">
+              <h3 class="awos-card__title">緊緻撫紋面膜</h3>
+              <p class="awos-card__spec">密集緊緻彈潤配方・修護撫平細紋</p>
+              <div class="awos-card__footer">
+                <span class="awos-card__price awos-card__price--inquiry">價格待補</span>
+                <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="awos-card awos-reveal">
+            <div class="awos-card__img-wrap">
+              <img src="assets/cosmetics-1.jpg" alt="保濕活顏面膜" class="awos-card__img">
+            </div>
+            <div class="awos-card__body">
+              <h3 class="awos-card__title">保濕活顏面膜</h3>
+              <p class="awos-card__spec">高效玻尿酸與天然蝸牛萃取結合・長效鎖水透亮</p>
+              <div class="awos-card__footer">
+                <span class="awos-card__price awos-card__price--inquiry">價格待補</span>
+                <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 即食調理區塊 -->
+    <section id="instant" class="awos-section">
+      <div class="awos-section__header awos-reveal">
+        <span class="awos-section__tag">READY TO COOK</span>
+        <h2 class="awos-section__title">即食調理</h2>
+        <p class="awos-section__desc">五分鐘快速上桌的星級風味，居家聚餐、小酌微醺的絕佳良伴。</p>
+      </div>
+
+      <div class="awos-product-grid" style="grid-template-columns: 1fr; max-width: 520px; margin: 0 auto;">
+        <article class="awos-card awos-reveal">
+          <div class="awos-card__img-wrap">
+            <img src="assets/baked-escargot.png" alt="韓式醬菇白玉螺調理包" class="awos-card__img">
+          </div>
+          <div class="awos-card__body">
+            <h3 class="awos-card__title">韓式醬菇白玉螺調理包</h3>
+            <p class="awos-card__spec">200克・嚴選鮮香醬汁與厚實螺肉，加熱即食</p>
+            <div class="awos-card__footer">
+              <span class="awos-card__price">NT$ 330</span>
+              <a href="contact.html#contact-placeholder" class="awos-btn-primary">立即訂購</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6. 農場導覽體驗區塊 -->
+    <section id="tour" class="awos-section awos-section--alt">
+      <div class="awos-section__inner">
+        <div class="awos-tour-block awos-reveal">
+          <div class="awos-tour__info">
+            <span style="color: var(--awos-secondary); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em;">EXCLUSIVE EXPERIENCE</span>
+            <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin: 8px 0 16px;">農場導覽體驗（預約制）</h2>
+            <p style="color: #E6E0D6; font-size: 0.98rem; line-height: 1.8; margin-bottom: 20px;">
+              為了提供最細緻舒適的導覽體驗，<strong>每天只接待一組客人</strong>。由主理人親自引領走進台東長濱農場，感受土地真實的溫度。
+            </p>
+
+            <div class="awos-tour__pricing">
+              <div class="awos-tour__price-row">
+                <span>成人體驗票</span>
+                <strong style="color: #FFF;">NT$ 1,280 / 人</strong>
+              </div>
+              <div class="awos-tour__price-row">
+                <span>未滿 18 歲優待票</span>
+                <strong style="color: #FFF;">NT$ 980 / 人</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <a href="tour.html" class="awos-btn-primary" style="background: var(--awos-secondary); border-color: var(--awos-secondary); color: #2E2A24 !important;">
+                查看完整導覽細節
+              </a>
+              <a href="contact.html#contact-placeholder" class="awos-btn-secondary" style="border-color: #FFFFFF; color: #FFFFFF !important;">
+                立即預約時段
+              </a>
+            </div>
+          </div>
+
+          <div class="awos-tour__img-gallery">
+            <div class="awos-tour__img-wrap">
+              <img src="assets/tour-guest.jpg" alt="遊客農場體驗畫面">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 全站共用 Footer -->
+  <footer class="awos-footer">
+    <div class="awos-footer__inner">
+      <div>
+        <h3 class="awos-footer__brand-title">A-Wos 農場</h3>
+        <p class="awos-footer__company">宏成農品有限公司</p>
+        <ul class="awos-footer__info-list">
+          <li><strong>地址：</strong>台東縣長濱鄉八桑安路65之1號</li>
+          <li><strong>電話：</strong>0932-198-152 ｜ (089) 801-568</li>
+          <li><strong>Email：</strong>hello@awosfarm.com</li>
+          <li><strong>營業時間：</strong>14:00 - 16:00（預約制）</li>
+        </ul>
+        <div class="awos-footer__social">
+          <a href="https://www.facebook.com/awossnailfarm" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+          <a href="https://www.instagram.com/awos_farm" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">快速導覽</h4>
+        <ul class="awos-footer__links">
+          <li><a href="shop.html">線上商店全品項</a></li>
+          <li><a href="tour.html">農場導覽體驗預約</a></li>
+          <li><a href="about.html">關於品牌與主理人</a></li>
+          <li><a href="https://awosfarm.com/bao/" target="_blank" rel="noopener noreferrer">美味蝸堡預訂 ↗</a></li>
+          <li><a href="https://awosfarm.com/learn-from-the-best/" target="_blank" rel="noopener noreferrer">專業養殖課程 ↗</a></li>
+          <li><a href="contact.html">聯繫我們與常見問題</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="awos-footer__title">購物須知與條款</h4>
+        <ul class="awos-footer__links">
+          <li><a href="https://awosfarm.com/privacy-policy/" target="_blank" rel="noopener noreferrer">隱私權政策 ↗</a></li>
+          <li><a href="https://awosfarm.com/payment-and-delivery/" target="_blank" rel="noopener noreferrer">付款與運送須知 ↗</a></li>
+          <li><a href="https://awosfarm.com/refund-and-returns-policy/" target="_blank" rel="noopener noreferrer">退換貨政策 ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="awos-footer__bottom">
+      <p>© 2026 宏成農品有限公司 All Rights Reserved.</p>
+      <p>白玉蝸牛友善養殖 ｜ 台東長濱鄉八桑安</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
